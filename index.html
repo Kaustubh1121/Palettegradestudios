@@ -70,7 +70,8 @@
     .work-card{border:1px solid var(--border);background:var(--card);text-decoration:none;color:var(--white);display:flex;flex-direction:column;transition:border-color .2s;overflow:hidden}
     .work-card:hover{border-color:var(--gold)}
     .work-thumb{width:100%;height:155px;overflow:hidden;flex-shrink:0}
-    .work-thumb svg{width:100%;height:100%}
+    .work-thumb svg,
+    .work-thumb img{width:100%;height:100%;display:block;object-fit:cover}
     .work-info{padding:1.2rem 1.4rem;display:flex;flex-direction:column;gap:.35rem}
     .work-type{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
     .work-title{font-family:var(--font-serif);font-size:1rem;line-height:1.4}
@@ -124,22 +125,22 @@
       .hero-content{max-width:45%}
     }
     @media(max-width:800px){
-      nav{padding:1rem 4vw}
-      .nav-brand{max-width:calc(100% - 5.2rem);min-width:0;overflow:hidden}
-      .nav-logo-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:1.05rem}
-      .nav-toggle{display:inline-flex;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:50%;}
+      nav{padding:.8rem 4vw;overflow:visible}
+      .nav-brand{flex:1 1 auto;min-width:0;max-width:calc(100% - 5rem);overflow:hidden}
+      .nav-logo-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.98rem}
+      .nav-toggle{flex:0 0 auto;display:inline-flex;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:50%;width:40px;height:40px;}
       .nav-toggle span{background:var(--white)}
-      .nav-links{display:none;position:fixed;inset:0;background:rgba(10,10,10,.96);backdrop-filter:blur(12px);flex-direction:column;justify-content:center;align-items:center;gap:1.8rem;padding:6rem 1.5rem;transition:opacity .25s ease,visibility .25s ease;visibility:hidden;opacity:0;z-index:110;}
+      .nav-links{display:none;position:fixed;top:4rem;left:0;right:0;bottom:0;height:auto;min-height:calc(100vh - 4rem);background:rgba(10,10,10,.98);backdrop-filter:blur(12px);flex-direction:column;justify-content:flex-start;align-items:center;gap:1.2rem;padding:1rem 1rem 1.2rem;transition:opacity .25s ease,visibility .25s ease;visibility:hidden;opacity:0;z-index:110;overflow-y:auto;}
       .nav-links.open{display:flex;visibility:visible;opacity:1}
       .nav-links li{margin:0;width:100%}
-      .nav-links a{color:var(--white);font-size:1.1rem;letter-spacing:.2em;text-align:center;width:100%;}
-      #hero{padding:3rem 4vw 2rem;display:flex;flex-direction:column;align-items:center;gap:1.5rem;}
-      .hero-photo{position:relative;top:auto;right:auto;width:100%;min-height:240px;opacity:1;margin-bottom:1rem;overflow:hidden;}
+      .nav-links a{color:var(--white);font-size:.98rem;letter-spacing:.16em;text-align:center;width:100%;}
+      #hero{padding:2.5rem 4vw 1.5rem;display:flex;flex-direction:column;align-items:center;gap:1rem;}
+      .hero-photo{position:relative;top:auto;right:auto;width:100%;min-height:200px;opacity:1;margin-bottom:.8rem;overflow:hidden;}
       .hero-photo::before{display:none}
       .hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
       .hero-content{max-width:100%;min-width:auto;padding:0;width:100%;align-items:center;text-align:center;}
-      .hero-logo{margin:0 auto 1.5rem;}
-      .hero-title{font-size:clamp(2.6rem,8vw,4.5rem)}
+      .hero-logo{margin:0 auto 1rem;width:70px;height:70px;}
+      .hero-title{font-size:clamp(2.3rem,8vw,3.8rem)}
       .hero-sub,.hero-desc{max-width:100%;margin-left:auto;margin-right:auto}
       .btn{align-self:center;max-width:none}
     }
@@ -147,14 +148,19 @@
       .services-grid{grid-template-columns:1fr}
       .work-grid{grid-template-columns:1fr}
       .about-grid,.contact-grid{grid-template-columns:1fr;gap:2.5rem}
-      #hero{padding:2rem 4vw 2rem;display:flex;flex-direction:column;align-items:flex-start;gap:1.5rem;}
-      .hero-photo{display:block;position:relative;top:auto;right:auto;width:100%;height:auto;opacity:1;overflow:hidden;margin-bottom:1.5rem;}
-      .hero-photo img{width:100%;height:auto;object-fit:cover;display:block;}
-      .hero-content{padding:0;width:100%}
-      .hero-title{font-size:clamp(2.2rem,9vw,3.8rem)}
-      .hero-sub{font-size:1rem}
-      .hero-desc{font-size:.92rem}
-      .btn{max-width:none}
+      nav{padding:.85rem 4vw;overflow:visible}
+      .nav-logo-text{font-size:.95rem}
+      .nav-toggle{width:40px;height:40px}
+      .nav-links{top:4rem;left:0;right:0;bottom:0;height:auto;min-height:calc(100vh - 4rem);padding:1.2rem 1rem 1.5rem;gap:1.2rem;overflow-y:auto}
+      #hero{padding:5rem 4vw 1.5rem;display:flex;flex-direction:column;align-items:center;gap:1rem;}
+      .hero-photo{display:block;position:relative;top:auto;right:auto;width:100%;min-height:190px;height:auto;opacity:1;overflow:hidden;margin-bottom:1rem;}
+      .hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+      .hero-content{padding:0;width:100%;align-items:center;text-align:center}
+      .hero-logo{margin:0 auto 1rem;width:68px;height:68px;}
+      .hero-title{font-size:clamp(2rem,9vw,3.4rem)}
+      .hero-sub{font-size:.96rem}
+      .hero-desc{font-size:.88rem}
+      .btn{padding:.65rem 1rem;font-size:.75rem;max-width:none}
     }
   </style>
 </head>
@@ -162,7 +168,7 @@
 
 <div class="page-loader" id="pageLoader" aria-hidden="true">
   <div class="page-loader-inner">
-    <img class="loader-logo" src="PaletteGradeStudios_WhiteText.png" alt="PaletteGrade Studios logo" alt="PaletteGrade Studios logo">
+    <img class="loader-logo" src="PaletteGradeStudios_WhiteText.png" alt="PaletteGrade Studios logo">
     <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
     <div class="loader-status" id="loaderStatus">Loading 0%</div>
   </div>
