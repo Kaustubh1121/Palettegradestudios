@@ -1,0 +1,12 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^python -c \"from pathlib import Path; p = Path\\('palettegradestudios\\.html'\\); print\\(p\\.exists\\(\\)\\); txt = p\\.read_text\\(encoding='utf-8'\\); print\\(txt\\[txt\\.index\\('loader-logo'\\):txt\\.index\\('loader-status'\\)\\+20\\]\\)\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python --version; if \\(\\$\\?\\) \\{ Get-Content palettegradestudios\\.html \\| Select-Object -First 130 \\| Select-String 'loader-logo\\|PaletteGradeStudios_WhiteText\\.png' \\}$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
