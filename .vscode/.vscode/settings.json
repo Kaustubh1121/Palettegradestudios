@@ -1,5 +1,27 @@
 {
     "chat.tools.terminal.autoApprove": {
-        "Get-Command": true
+        "Get-Command": true,
+        "Set-Content": true,
+        "ForEach-Object": true,
+        "/^Set-Location 'e:\\\\website'; if \\(Get-Command python -ErrorAction SilentlyContinue\\) \\{ python --version \\} else \\{ Write-Output 'python-not-found' \\}; \\$lines = Get-Content \\.\\\\index\\.html -Encoding Unicode; \\$sections = @\\(\\); \\$sections \\+= \\[PSCustomObject\\]@\\{Name='load-js';Lines=\\$lines\\[\\(1034-1\\)\\.\\.\\(1060-1\\)\\]\\}; \\$sections \\+= \\[PSCustomObject\\]@\\{Name='hero';Lines=\\$lines\\[\\(328-1\\)\\.\\.\\(334-1\\)\\]\\}; \\$sections \\+= \\[PSCustomObject\\]@\\{Name='process';Lines=\\$lines\\[\\(472-1\\)\\.\\.\\(500-1\\)\\]\\}; foreach \\(\\$s in \\$sections\\) \\{ Write-Output \"--- \\$\\(\\$s\\.Name\\) ---\"; \\$i = switch \\(\\$s\\.Name\\) \\{ 'load-js' \\{1034\\} 'hero' \\{328\\} 'process' \\{472\\} \\}; foreach \\(\\$line in \\$s\\.Lines\\) \\{ \"\\{0,4\\}: \\{1\\}\" -f \\$i, \\$line; \\$i\\+\\+ \\} \\}$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "py": true,
+        "/^cd e:\\\\website ; powershell @\"\n\\\\\\$bytes = \\[System\\.IO\\.File\\]::ReadAllBytes\\('index\\.html'\\)\n\\\\\\$text = \\[System\\.Text\\.Encoding\\]::UTF8\\.GetString\\(\\\\\\$bytes\\)\n# Find the position of 'Watch on YouTube' and get the next 20 characters\n\\\\\\$idx = \\\\\\$text\\.IndexOf\\('Watch on YouTube'\\)\nif \\(\\\\\\$idx -gt 0\\) \\{\n  \\\\\\$substring = \\\\\\$text\\.Substring\\(\\\\\\$idx \\+ 17, 3\\)  # Get next 3 chars after \"Watch on YouTube\"\n  for \\(\\\\\\$i = 0; \\\\\\$i -lt \\\\\\$substring\\.Length; \\\\\\$i\\+\\+\\) \\{\n    \\\\\\$char = \\\\\\$substring\\[\\\\\\$i\\]\n    \\\\\\$code = \\[int\\]\\\\\\$char\n    Write-Host \"Position \\\\\\$i: '\\\\\\$char' = hex \\$\\('\\{0:X4\\}' -f \\\\\\$code\\)\"\n  \\}\n\\}\n\"@$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "import": true,
+        "from": true,
+        "path": true,
+        "text": true,
+        "pattern": true,
+        "www.palettegradestudios.com</span>": true,
+        "pattern.subn(new_footer,": true,
+        "new_footer": true,
+        "text.find('<footer>')": true,
+        "repr(text[start:end+len('</footer>')])": true,
+        "text[start:end+len('</footer>')": true
     }
 }
