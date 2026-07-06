@@ -119,10 +119,6 @@
     .work-card{border:1px solid var(--border);background:var(--card);text-decoration:none;color:var(--white);display:flex;flex-direction:column;transition:border-color .25s ease,transform .25s ease,box-shadow .25s ease;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.16)}
     .work-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 18px 36px rgba(0,0,0,.26),0 0 0 1px rgba(201,168,76,.1)}
     .work-thumb{width:100%;height:155px;overflow:hidden;flex-shrink:0}
-    .project-spotlight{margin-top:1.5rem;padding:1.4rem 1.5rem;border:1px solid rgba(201,168,76,.18);border-radius:24px;background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(255,255,255,.03));box-shadow:0 10px 24px rgba(0,0,0,.16)}
-    .project-spotlight-title{font-family:var(--font-display);font-size:1.6rem;letter-spacing:.04em;margin:0 0 .35rem}
-    .project-spotlight p{color:#bdbdbd;max-width:680px;line-height:1.8}
-    .project-spotlight-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1rem}
     .work-thumb svg,
     .work-thumb img{width:100%;height:100%;display:block;object-fit:cover}
     .work-info{padding:1.2rem 1.4rem;display:flex;flex-direction:column;gap:.35rem}
@@ -255,6 +251,15 @@
       section[id]{scroll-margin-top:84px}
       .services-grid{grid-template-columns:1fr}
       .playground-shell{gap:1rem}
+      /* Mobile-friendly playground layout: stack, keep scope visible and make controls scrollable */
+      .playground-shell{display:flex;flex-direction:column;align-items:stretch}
+      .playground-card{order:1}
+      .playground-scope{order:0;margin-bottom:.6rem}
+      .playground-scope canvas{height:140px}
+      .playground-frame{aspect-ratio:4/3;min-height:140px}
+      /* Remove scrollable controls: show controls in a compact two-column grid */
+      .playground-controls{max-height:none;overflow:visible;padding-right:0;display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem}
+      .playground-actions{position:static;background:transparent;padding-top:0;padding-bottom:0;margin-top:.3rem}
       .playground-frame{aspect-ratio:4/3;min-height:220px;}
       .playground-card{padding:1rem;min-width:0}
       .playground-actions{flex-direction:column}
@@ -300,8 +305,9 @@
       section{padding:3.25rem 1rem}
       .playground-section{padding:3.25rem 1rem}
       .playground-card{padding:.8rem;border-radius:18px}
-      .playground-frame{border-radius:14px}
+      .playground-frame{border-radius:14px;min-height:140px}
       .playground-btn,.playground-preset{min-height:44px;padding:.72rem .8rem;font-size:.68rem;letter-spacing:.1em}
+      .playground-controls{grid-template-columns:1fr}
       .playground-preset-row{gap:.45rem}
       .playground-lift{gap:.45rem}
       .hero-title{font-size:clamp(1.9rem,10vw,3.2rem)}
@@ -490,30 +496,29 @@
 <!-- WORKFLOW -->
 <section id="workflow" data-anchor-slugs="workflow,our-workflow,our-workflow-section">
   <span id="our-workflow"></span>
-  <span id="our-workflow-section"></span>
-  <p class="section-label">Workflow</p>
-  <h2 class="section-title">Our Process</h2>
+  <p class="section-label">How We Work</p>
+  <h2 class="section-title">Workflow</h2>
   <div class="divider"></div>
-  <p class="process-note">Tap to know our workflow</p>
+  <p class="process-note">Explore our creative process through reels. Click any card to open the exact Instagram reel directly.</p>
   <div class="process-grid">
     <a class="process-card" data-reel-id="DYmqxWxMSlh" href="https://www.instagram.com/reel/DYmqxWxMSlh/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener">
-      <div class="process-thumb"><img loading="lazy" decoding="async" src="https://scontent.cdninstagram.com/v/t51.82787-15/704751844_18023238698830141_3820940688318495560_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=108&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=lnwXrkKyVEoQ7kNvwHir2br&_nc_oc=AdqbHlQRodCoT1T6LymfF4pQ0FF16YT89fOjvLRROAMCclDseCfzjkbLQjWJlCwzK_WBpLnCfEMATTlr3N8MWeXt&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=XNwBfN31p5ae0RE98SkjYA&_nc_ss=7860f&oh=00_AQCUZEyvAa3-NQy5uIwe0ipKlfZYuTm6m9x8WA0oPTfbcQ&oe=6A4AA458" alt="Reel thumbnail"></div>
+      <div class="process-thumb"><img loading="lazy" decoding="async" src="thumbnails/704751844_18023238698830141_3820940688318495560_n.jpg" alt="Workflow thumbnail 1"></div>
       <div class="process-card-copy">
-        <span class="item-title">Visit our page </span>
+        <span class="item-title">View Reel</span>
         <span class="item-subtitle">Tap to know our process.</span>
       </div>
     </a>
     <a class="process-card" data-reel-id="DYCZmGOt9aG" href="https://www.instagram.com/reel/DYCZmGOt9aG/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener">
-      <div class="process-thumb"><img loading="lazy" decoding="async" src="https://scontent.cdninstagram.com/v/t51.82787-15/686459836_18021461945830141_4273724725469041523_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=NpRPEwwfMXwQ7kNvwEc9dTI&_nc_oc=Adq3xL3_lFVqLPep2O57beTvFcZO_ygAJKsAtAZOEmYxdssj2ZRbDAAF350eSDwThb6cj9j2Xg6VWaAUVakQjY9e&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=JH3TCPObl-bsiFtyYf9jQQ&_nc_ss=7860f&oh=00_AQChdiEXdyi_P9RGaSpXwMz2LH4G8cx6St0CjVxSYfgXwg&oe=6A4AB40C" alt="Reel thumbnail"></div>
+      <div class="process-thumb"><img loading="lazy" decoding="async" src="thumbnails/686459836_18021461945830141_4273724725469041523_n.jpg" alt="Workflow thumbnail 2"></div>
       <div class="process-card-copy">
-        <span class="item-title">Visit our page</span>
+        <span class="item-title">View Reel</span>
         <span class="item-subtitle">Tap to know our process.</span>
       </div>
     </a>
-    <a class="process-card" data-reel-id="DEpL4RBu1wQ" href="https://www.instagram.com/reel/DEpL4RBu1wQ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener">
-      <div class="process-thumb"><img loading="lazy" decoding="async" src="https://scontent.cdninstagram.com/v/t51.75761-15/473145734_17967361082830141_7788252520344398285_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=F05J-En1gS8Q7kNvwE2rchD&_nc_oc=AdrRIUFWpuOjpGA-uITKmD7-6peNs1ZfljkD--nb1I0VR7DXwJeUbc8t0otb5mBxfNWuBC8CIHZYY90-EiKwNKg1&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=GyWSb9DiAWcDPxzifqfgUQ&_nc_ss=7860f&oh=00_AQBavCyRoMWVaF1evIGAEdHQSxUVfArvM9ba63rE7-VBwg&oe=6A4AACFA" alt="Reel thumbnail"></div>
+    <a class="process-card" data-reel-id="C3sKeR6PaA7" href="https://www.instagram.com/reel/C3sKeR6PaA7/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener">
+      <div class="process-thumb"><img loading="lazy" decoding="async" src="thumbnails/504496354_1937889303650926_8255465718882956949_n.jpg" alt="Workflow thumbnail 3"></div>
       <div class="process-card-copy">
-        <span class="item-title">Visit our page</span>
+        <span class="item-title">View Reel</span>
         <span class="item-subtitle">Tap to know our process.</span>
       </div>
     </a>
@@ -661,14 +666,14 @@
     </a>
 
     <!-- CARD 11 -->
-    <a class="work-card" href="#olympia-elevators">
+    <a class="work-card" href="https://youtu.be/YLXNCg-896A?si=xFZOfPRm9KajtZ2Z" target="_blank" rel="noopener">
       <div class="work-thumb">
-        <img loading="lazy" decoding="async" src="https://scontent.fpnq7-4.fna.fbcdn.net/v/t51.71878-15/613319395_1593677478309431_2563827714190794896_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a27664&_nc_ohc=mS8-FZQVpZwQ7kNvwFS3I6E&_nc_oc=AdrOMkN94qsyMaVfgqEBg0esidTSkYTkiO5rWrG4TpZifu_vq7bn6n96lt-S27ygoXq_PTkg3uaVmdMjO8p9URTO&_nc_zt=23&_nc_ht=scontent.fpnq7-4.fna&_nc_gid=in8JaUCTg8OKKqebns-Hcg&_nc_ss=7820f&oh=00_AQD_z4qKlUHM26AbfwY0lG4lsYno_5JJIyTaaRWEX1KTuA&oe=6A4AAC15" alt="Olympia Elevators" style="width:100%;height:100%;object-fit:cover;">
+        <img loading="lazy" decoding="async" src="https://img.youtube.com/vi/YLXNCg-896A/mqdefault.jpg" alt="Olympia Elevators" style="width:100%;height:100%;object-fit:cover;">
       </div>
       <div class="work-info">
         <span class="work-type">Commercial AD Film • D.I.</span>
         <span class="work-title">Olympia Elevators</span>
-        <span class="work-platform">Watch on Facebook ▶</span>
+        <span class="work-platform">Watch on YouTube ▶</span>
       </div>
     </a>
 
@@ -805,14 +810,6 @@
     </a>
 
   </div>
-  <article id="olympia-elevators" class="project-spotlight" aria-labelledby="olympia-elevators-title">
-    <p class="section-label">Project Spotlight</p>
-    <h3 id="olympia-elevators-title" class="project-spotlight-title">Olympia Elevators</h3>
-    <p>We delivered a polished, high-contrast grade for this commercial campaign, keeping the product presentation crisp and the motion clean from frame to frame.</p>
-    <div class="project-spotlight-actions">
-      <a class="contact-btn" href="#contact">Discuss a similar grade</a>
-    </div>
-  </article>
 </section>
 
 <!-- PARTNERS -->
@@ -1549,39 +1546,6 @@
       });
 
       startCarousel();
-      updateInstagramWorkflowThumbnails();
-    }
-
-    async function updateInstagramWorkflowThumbnails() {
-      const cards = Array.from(document.querySelectorAll('#workflow .process-card'));
-      const proxyBase = 'https://api.allorigins.win/raw?url=';
-      const timeoutMs = 12000;
-
-      const fetchWithTimeout = (url) => {
-        const controller = new AbortController();
-        const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
-        return fetch(url, { signal: controller.signal, mode: 'cors' })
-          .finally(() => window.clearTimeout(timeout));
-      };
-
-      for (const card of cards) {
-        const reelId = card.dataset.reelId || card.href?.split('/reel/')[1]?.split('/')[0];
-        const img = card.querySelector('img');
-        if (!reelId || !img) continue;
-
-        try {
-          const pageUrl = `https://www.instagram.com/reel/${encodeURIComponent(reelId)}/`;
-          const response = await fetchWithTimeout(proxyBase + encodeURIComponent(pageUrl));
-          if (!response.ok) throw new Error(`Proxy fetch failed ${response.status}`);
-          const html = await response.text();
-          const match = html.match(/<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i);
-          if (match && match[1]) {
-            img.src = match[1];
-          }
-        } catch (error) {
-          console.warn('Instagram thumbnail refresh failed for', reelId, error);
-        }
-      }
     }
 
   })();
