@@ -119,6 +119,10 @@
     .work-card{border:1px solid var(--border);background:var(--card);text-decoration:none;color:var(--white);display:flex;flex-direction:column;transition:border-color .25s ease,transform .25s ease,box-shadow .25s ease;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.16)}
     .work-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 18px 36px rgba(0,0,0,.26),0 0 0 1px rgba(201,168,76,.1)}
     .work-thumb{width:100%;height:155px;overflow:hidden;flex-shrink:0}
+    .project-spotlight{margin-top:1.5rem;padding:1.4rem 1.5rem;border:1px solid rgba(201,168,76,.18);border-radius:24px;background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(255,255,255,.03));box-shadow:0 10px 24px rgba(0,0,0,.16)}
+    .project-spotlight-title{font-family:var(--font-display);font-size:1.6rem;letter-spacing:.04em;margin:0 0 .35rem}
+    .project-spotlight p{color:#bdbdbd;max-width:680px;line-height:1.8}
+    .project-spotlight-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1rem}
     .work-thumb svg,
     .work-thumb img{width:100%;height:100%;display:block;object-fit:cover}
     .work-info{padding:1.2rem 1.4rem;display:flex;flex-direction:column;gap:.35rem}
@@ -484,7 +488,9 @@
 </section>
 
 <!-- WORKFLOW -->
-<section id="workflow">
+<section id="workflow" data-anchor-slugs="workflow,our-workflow,our-workflow-section">
+  <span id="our-workflow"></span>
+  <span id="our-workflow-section"></span>
   <p class="section-label">Workflow</p>
   <h2 class="section-title">Our Process</h2>
   <div class="divider"></div>
@@ -565,7 +571,7 @@
       </div>
       <div class="work-info">
         <span class="work-type">Music Video • D.I.</span>
-        <span class="work-title">माधव्य गोहिडी / Madhahun Goad</span>
+        <span class="work-title"> मधाहून गोड / Madhahun Goad</span>
         <span class="work-platform">Watch on YouTube ▶</span>
       </div>
     </a>
@@ -655,13 +661,13 @@
     </a>
 
     <!-- CARD 11 -->
-    <a class="work-card" href="https://www.facebook.com/reel/1614813436461485" target="_blank" rel="noopener">
+    <a class="work-card" href="#olympia-elevators">
       <div class="work-thumb">
         <img loading="lazy" decoding="async" src="https://scontent.fpnq7-4.fna.fbcdn.net/v/t51.71878-15/613319395_1593677478309431_2563827714190794896_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a27664&_nc_ohc=mS8-FZQVpZwQ7kNvwFS3I6E&_nc_oc=AdrOMkN94qsyMaVfgqEBg0esidTSkYTkiO5rWrG4TpZifu_vq7bn6n96lt-S27ygoXq_PTkg3uaVmdMjO8p9URTO&_nc_zt=23&_nc_ht=scontent.fpnq7-4.fna&_nc_gid=in8JaUCTg8OKKqebns-Hcg&_nc_ss=7820f&oh=00_AQD_z4qKlUHM26AbfwY0lG4lsYno_5JJIyTaaRWEX1KTuA&oe=6A4AAC15" alt="Olympia Elevators" style="width:100%;height:100%;object-fit:cover;">
       </div>
       <div class="work-info">
         <span class="work-type">Commercial AD Film • D.I.</span>
-        <span class="work-title">Olympia Elevators </span>
+        <span class="work-title">Olympia Elevators</span>
         <span class="work-platform">Watch on Facebook ▶</span>
       </div>
     </a>
@@ -709,7 +715,7 @@
       </div>
       <div class="work-info">
         <span class="work-type">Commercial AD Film • D.I.</span>
-        <span class="work-title">The Shrikhand Studio | शिरत </span>
+        <span class="work-title">The Shrikhand Studio | गोडवा नात्यांचा </span>
         <span class="work-platform">Watch on YouTube ▶</span>
       </div>
     </a>
@@ -721,7 +727,7 @@
       </div>
       <div class="work-info">
         <span class="work-type">Commercial AD Film • D.I.</span>
-        <span class="work-title">The Shrikhand Studio | रख  </span>
+        <span class="work-title">The Shrikhand Studio | खंड किती ??  </span>
         <span class="work-platform">Watch on YouTube ▶</span>
       </div>
     </a>
@@ -799,6 +805,14 @@
     </a>
 
   </div>
+  <article id="olympia-elevators" class="project-spotlight" aria-labelledby="olympia-elevators-title">
+    <p class="section-label">Project Spotlight</p>
+    <h3 id="olympia-elevators-title" class="project-spotlight-title">Olympia Elevators</h3>
+    <p>We delivered a polished, high-contrast grade for this commercial campaign, keeping the product presentation crisp and the motion clean from frame to frame.</p>
+    <div class="project-spotlight-actions">
+      <a class="contact-btn" href="#contact">Discuss a similar grade</a>
+    </div>
+  </article>
 </section>
 
 <!-- PARTNERS -->
@@ -1076,6 +1090,33 @@
         });
       });
     }
+
+    function normalizeHash(hash) {
+      return (hash || '').replace(/^#/, '').trim().toLowerCase();
+    }
+
+    function scrollToHashTarget(hash) {
+      const normalized = normalizeHash(hash);
+      if (!normalized) return;
+
+      const targetId = normalized === 'workflow' || normalized === 'our-workflow' || normalized === 'our-workflow-section'
+        ? 'workflow'
+        : normalized;
+
+      const target = document.getElementById(targetId);
+      if (!target) return;
+
+      const offset = 90;
+      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+
+    window.addEventListener('hashchange', () => scrollToHashTarget(window.location.hash));
+    window.addEventListener('load', () => {
+      if (window.location.hash) {
+        setTimeout(() => scrollToHashTarget(window.location.hash), 120);
+      }
+    });
 
     const revealElements = document.querySelectorAll('.reveal, #hero, #services, #workflow, #work, #reviews, #about, #partners, #contact, footer');
     const revealObserver = new IntersectionObserver((entries) => {
