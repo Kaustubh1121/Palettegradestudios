@@ -496,21 +496,21 @@
   <div class="divider"></div>
   <p class="process-note">Tap to know our workflow</p>
   <div class="process-grid">
-    <a class="process-card" href="https://www.instagram.com/reel/DYmqxWxMSlh/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener">
+    <a class="process-card" data-reel-id="DYmqxWxMSlh" href="https://www.instagram.com/reel/DYmqxWxMSlh/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener">
       <div class="process-thumb"><img loading="lazy" decoding="async" src="https://scontent.cdninstagram.com/v/t51.82787-15/704751844_18023238698830141_3820940688318495560_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=108&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=lnwXrkKyVEoQ7kNvwHir2br&_nc_oc=AdqbHlQRodCoT1T6LymfF4pQ0FF16YT89fOjvLRROAMCclDseCfzjkbLQjWJlCwzK_WBpLnCfEMATTlr3N8MWeXt&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=XNwBfN31p5ae0RE98SkjYA&_nc_ss=7860f&oh=00_AQCUZEyvAa3-NQy5uIwe0ipKlfZYuTm6m9x8WA0oPTfbcQ&oe=6A4AA458" alt="Reel thumbnail"></div>
       <div class="process-card-copy">
         <span class="item-title">Visit our page </span>
         <span class="item-subtitle">Tap to know our process.</span>
       </div>
     </a>
-    <a class="process-card" href="https://www.instagram.com/reel/DYCZmGOt9aG/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener">
+    <a class="process-card" data-reel-id="DYCZmGOt9aG" href="https://www.instagram.com/reel/DYCZmGOt9aG/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener">
       <div class="process-thumb"><img loading="lazy" decoding="async" src="https://scontent.cdninstagram.com/v/t51.82787-15/686459836_18021461945830141_4273724725469041523_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=NpRPEwwfMXwQ7kNvwEc9dTI&_nc_oc=Adq3xL3_lFVqLPep2O57beTvFcZO_ygAJKsAtAZOEmYxdssj2ZRbDAAF350eSDwThb6cj9j2Xg6VWaAUVakQjY9e&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=JH3TCPObl-bsiFtyYf9jQQ&_nc_ss=7860f&oh=00_AQChdiEXdyi_P9RGaSpXwMz2LH4G8cx6St0CjVxSYfgXwg&oe=6A4AB40C" alt="Reel thumbnail"></div>
       <div class="process-card-copy">
         <span class="item-title">Visit our page</span>
         <span class="item-subtitle">Tap to know our process.</span>
       </div>
     </a>
-    <a class="process-card" href="https://www.instagram.com/reel/DEpL4RBu1wQ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener">
+    <a class="process-card" data-reel-id="DEpL4RBu1wQ" href="https://www.instagram.com/reel/DEpL4RBu1wQ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener">
       <div class="process-thumb"><img loading="lazy" decoding="async" src="https://scontent.cdninstagram.com/v/t51.75761-15/473145734_17967361082830141_7788252520344398285_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=F05J-En1gS8Q7kNvwE2rchD&_nc_oc=AdrRIUFWpuOjpGA-uITKmD7-6peNs1ZfljkD--nb1I0VR7DXwJeUbc8t0otb5mBxfNWuBC8CIHZYY90-EiKwNKg1&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=GyWSb9DiAWcDPxzifqfgUQ&_nc_ss=7860f&oh=00_AQBavCyRoMWVaF1evIGAEdHQSxUVfArvM9ba63rE7-VBwg&oe=6A4AACFA" alt="Reel thumbnail"></div>
       <div class="process-card-copy">
         <span class="item-title">Visit our page</span>
@@ -1549,6 +1549,39 @@
       });
 
       startCarousel();
+      updateInstagramWorkflowThumbnails();
+    }
+
+    async function updateInstagramWorkflowThumbnails() {
+      const cards = Array.from(document.querySelectorAll('#workflow .process-card'));
+      const proxyBase = 'https://api.allorigins.win/raw?url=';
+      const timeoutMs = 12000;
+
+      const fetchWithTimeout = (url) => {
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+        return fetch(url, { signal: controller.signal, mode: 'cors' })
+          .finally(() => window.clearTimeout(timeout));
+      };
+
+      for (const card of cards) {
+        const reelId = card.dataset.reelId || card.href?.split('/reel/')[1]?.split('/')[0];
+        const img = card.querySelector('img');
+        if (!reelId || !img) continue;
+
+        try {
+          const pageUrl = `https://www.instagram.com/reel/${encodeURIComponent(reelId)}/`;
+          const response = await fetchWithTimeout(proxyBase + encodeURIComponent(pageUrl));
+          if (!response.ok) throw new Error(`Proxy fetch failed ${response.status}`);
+          const html = await response.text();
+          const match = html.match(/<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i);
+          if (match && match[1]) {
+            img.src = match[1];
+          }
+        } catch (error) {
+          console.warn('Instagram thumbnail refresh failed for', reelId, error);
+        }
+      }
     }
 
   })();
