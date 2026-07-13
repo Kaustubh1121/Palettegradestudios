@@ -1,0 +1,48 @@
+name: Pages diagnostics
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show repository root files
+        run: |
+          echo "Working dir: $(pwd)"
+          ls -la
+          echo "--- top files ---"
+          find . -maxdepth 2 -type f -print | sed -n '1,200p'
+
+      - name: Show common build directories
+        run: |
+          for d in build dist public; do
+            if [ -d "$d" ]; then
+              echo "--- Contents of $d ---"
+              ls -la "$d"
+              find "$d" -maxdepth 3 -type f -print | sed -n '1,200p'
+            fi
+          done
+
+      - name: Show project-specific files
+        run: |
+          [ -f index.html ] && echo "index.html present" || echo "index.html not present"
+          [ -d thumbnails ] && echo "thumbnails/ present" || echo "thumbnails/ not present"
+          echo "--- find repo files (first 500 lines) ---"
+          find . -maxdepth 4 -type f -print | sed -n '1,500p'
+
+      - name: Upload artifact for inspection
+        uses: actions/upload-artifact@v4
+        with:
+          name: github-pages
+          path: |
+            index.html
+            thumbnails
+            build
+            dist
+            public
