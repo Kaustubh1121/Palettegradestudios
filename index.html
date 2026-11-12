@@ -655,7 +655,7 @@
         <img src="slider/Still 2026-01-19 193613_1.193.1.jpg" alt="Final reference scene 01" loading="lazy" decoding="async" />
         <span class="compare-thumb-label">Sony Venice</span>
       </button>
-      <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/Still 2026-11-12 174233_1.1.1.png" data-after="slider/71.jpg" data-scene="Scene 02" data-camera="Sony Venice" aria-label="Load scene 02 comparison">
+      <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/71.jpg" data-after="slider/71.jpg" data-scene="Scene 02" data-camera="Sony Venice" aria-label="Load scene 02 comparison">
         <img src="slider/71.jpg" alt="Final reference scene 02" loading="lazy" decoding="async" />
         <span class="compare-thumb-label">Sony Venice</span>
       </button>
@@ -663,7 +663,7 @@
         <img src="slider/Still 2026-05-14 161708_1.17.1.jpg" alt="Final reference scene 03" loading="lazy" decoding="async" />
         <span class="compare-thumb-label">Arri</span>
       </button>
-      <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/Still 2026-11-12 174233_1.5.1.png" data-after="slider/Still 2026-10-05 140954_1.112.1.jpg" data-scene="Scene 04" data-camera="Panasonic Lumix" aria-label="Load scene 04 comparison">
+      <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/Still 2026-10-05 140954_1.112.1.jpg" data-after="slider/Still 2026-10-05 140954_1.112.1.jpg" data-scene="Scene 04" data-camera="Panasonic Lumix" aria-label="Load scene 04 comparison">
         <img src="slider/Still 2026-10-05 140954_1.112.1.jpg" alt="Final reference scene 04" loading="lazy" decoding="async" />
         <span class="compare-thumb-label">Panasonic Lumix</span>
       </button>
@@ -1651,9 +1651,26 @@
       if (!initialThumb) return;
 
       const runLoad = () => {
-        preloadCompareImage(initialThumb.dataset.before);
-        preloadCompareImage(initialThumb.dataset.after);
-        setCompareScene(initialThumb);
+        const before = initialThumb.dataset.before;
+        const after = initialThumb.dataset.after;
+        if (!before || !after) return;
+
+        const imgBefore = new Image();
+        imgBefore.loading = 'eager';
+        imgBefore.decoding = 'async';
+        imgBefore.src = before;
+
+        const imgAfter = new Image();
+        imgAfter.loading = 'eager';
+        imgAfter.decoding = 'async';
+        imgAfter.src = after;
+
+        compareBeforeImage.src = before;
+        compareAfterImage.src = after;
+        compareBeforeImage.alt = `Before color grade ${initialThumb.dataset.scene || 'Scene'}`;
+        compareAfterImage.alt = `After color grade ${initialThumb.dataset.scene || 'Scene'}`;
+        if (compareCameraLabel) compareCameraLabel.textContent = `Camera • ${initialThumb.dataset.camera || 'Sony Venice'}`;
+        compareThumbs.forEach((thumb) => thumb.classList.toggle('is-active', thumb === initialThumb));
       };
 
       if (document.readyState === 'complete') {
