@@ -1699,22 +1699,36 @@
           sliderIsDragging = false;
         });
 
-        if (beforeImage) beforeImage.loading = 'lazy';
-        if (afterImage) afterImage.loading = 'lazy';
+        if (beforeImage) {
+          beforeImage.loading = slider === compareThumbs[0] ? 'eager' : 'lazy';
+          beforeImage.decoding = 'async';
+        }
+        if (afterImage) {
+          afterImage.loading = slider === compareThumbs[0] ? 'eager' : 'lazy';
+          afterImage.decoding = 'async';
+        }
       });
     }
 
-    function preloadCompareImage(src) {
+    function preloadCompareImage(src, priority = 'high') {
       if (!src || compareImageCache.has(src)) return;
       compareImageCache.add(src);
       const img = new Image();
       img.decoding = 'async';
-      img.loading = 'lazy';
-      img.fetchPriority = 'low';
+      img.loading = 'eager';
+      img.fetchPriority = priority;
       img.src = src;
       img.onerror = () => {
         compareImageCache.delete(src);
       };
+    }
+
+    function preloadCompareSectionImages() {
+      if (!compareScenes.length) return;
+      compareScenes.forEach((scene) => {
+        if (scene.before) preloadCompareImage(scene.before, 'high');
+        if (scene.after) preloadCompareImage(scene.after, 'high');
+      });
     }
 
     function updateGradeCompare(value) {
@@ -1829,6 +1843,7 @@
       updateGradeCompare(50);
     }
 
+    preloadCompareSectionImages();
     renderCompareMiniCards();
 
     if (compareThumbs.length) {
