@@ -196,7 +196,7 @@
 
     .before-after-section{padding:5rem 5vw;background:linear-gradient(180deg,rgba(7,7,7,0.96),rgba(17,17,17,0.98));border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
     .compare-shell{display:grid;gap:1rem;max-width:1200px;margin:0 auto}
-    .compare-slider{position:relative;aspect-ratio:2048 / 858;max-height:858px;min-height:360px;width:min(100%, 1280px);margin:0 auto;border-radius:26px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0d;box-shadow:0 26px 54px rgba(0,0,0,.28);--position:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;isolation:isolate}
+    .compare-slider{position:relative;aspect-ratio:2048 / 858;max-height:700px;min-height:260px;width:min(100%, 860px);margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0d;box-shadow:0 24px 48px rgba(0,0,0,.26);--position:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;isolation:isolate}
     .compare-slider::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.12));pointer-events:none;z-index:3}
     .compare-layer{position:absolute;inset:0;transition:none;z-index:1;overflow:hidden;background:#0b0b0b}
     .compare-layer img{display:block;width:100%;height:100%;object-fit:cover;object-position:center center;transform:scale(1.04)}
@@ -220,16 +220,58 @@
     .compare-meta:hover{border:none;box-shadow:none;transform:none}
     .compare-camera{position:relative;z-index:1;display:inline-block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#f3eee4;padding:.18rem .42rem;border-radius:999px;background:rgba(12,12,12,.38);border:1px solid rgba(201,168,76,.18);min-height:22px;display:inline-flex;align-items:center;justify-content:center;transition:text-shadow .2s ease,filter .2s ease,box-shadow .2s ease,border-color .2s ease}
     .compare-meta:hover .compare-camera{border-color:rgba(201,168,76,.32);box-shadow:0 0 0 1px rgba(201,168,76,.08),0 0 16px rgba(201,168,76,.2);text-shadow:0 0 14px rgba(201,168,76,.28);filter:brightness(1.08)}
-    .compare-gallery{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.7rem;margin:1.1rem auto 0;max-width:1200px}
-    .compare-thumb{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0d;box-shadow:0 16px 30px rgba(0,0,0,.18);border-radius:16px;padding:0;cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease,opacity .2s ease,text-shadow .2s ease;text-align:left;display:block;aspect-ratio:1.2;}
+    .compare-gallery{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.62rem;margin:1rem auto 0;max-width:860px}
+    .compare-thumb{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0d;box-shadow:0 14px 28px rgba(0,0,0,.16);border-radius:14px;padding:0;cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease,opacity .2s ease,text-shadow .2s ease;text-align:left;display:block;aspect-ratio:1.22;min-height:110px}
     .compare-thumb::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(201,168,76,.08),transparent 38%,transparent 68%,rgba(201,168,76,.08));pointer-events:none;z-index:1}
-    .compare-thumb:hover{transform:translateY(-2px);border-color:rgba(201,168,76,.32);box-shadow:0 0 0 1px rgba(201,168,76,.12),0 18px 34px rgba(0,0,0,.2),0 0 18px rgba(201,168,76,.14)}
-    .compare-thumb.is-active{border-color:rgba(201,168,76,.52);box-shadow:0 0 0 1px rgba(201,168,76,.26),0 18px 34px rgba(0,0,0,.22)}
-    .compare-thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(1.26) contrast(1.12) brightness(1.08) hue-rotate(4deg)}
-    .compare-thumb:nth-child(3) img,.compare-thumb:nth-child(5) img{width:112%;height:112%;margin-left:-6%;margin-top:-6%;object-fit:cover;object-position:center;transform:scale(1.12);transform-origin:center}
-    .compare-thumb-label,.compare-thumb-tag{position:absolute;left:10px;z-index:2;padding:.28rem .55rem;border-radius:999px;background:rgba(10,10,10,.58);border:1px solid rgba(255,255,255,.08);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:#f7f1d8;line-height:1.2}
-    .compare-thumb-label{top:10px;max-width:calc(100% - 20px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .compare-thumb:hover{transform:translateY(-2px);border-color:rgba(201,168,76,.32);box-shadow:0 0 0 1px rgba(201,168,76,.12),0 16px 30px rgba(0,0,0,.2),0 0 18px rgba(201,168,76,.12)}
+    .compare-thumb.is-active{border-color:rgba(201,168,76,.52);box-shadow:0 0 0 1px rgba(201,168,76,.26),0 16px 30px rgba(0,0,0,.2)}
+    .compare-thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(1.2) contrast(1.06) brightness(1.04)}
+    .compare-thumb:nth-child(3) img,.compare-thumb:nth-child(5) img{width:112%;height:112%;margin-left:-6%;margin-top:-6%;object-fit:cover;object-position:center;transform:scale(1.08);transform-origin:center}
+    .compare-thumb-label,.compare-thumb-tag{position:absolute;left:8px;z-index:2;padding:.24rem .48rem;border-radius:999px;background:rgba(10,10,10,.56);border:1px solid rgba(255,255,255,.08);font-size:.46rem;letter-spacing:.1em;text-transform:uppercase;color:#f7f1d8;line-height:1.2}
+    .compare-thumb-label{top:8px;max-width:calc(100% - 16px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+    .compare-scene-grid{display:grid;gap:1rem;max-width:1200px;margin:0 auto}
+    .compare-feature{display:grid;gap:.9rem}
+    .compare-feature-slider{position:relative;aspect-ratio:2048 / 858;max-height:610px;min-height:260px;width:100%;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#111;box-shadow:0 24px 48px rgba(0,0,0,.26);--position:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;isolation:isolate}
+    .compare-main-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
+    .compare-scene-tile{display:grid;gap:.55rem;padding:.55rem;border-radius:16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 28px rgba(0,0,0,.18);min-width:0}
+    .compare-scene-slider{position:relative;aspect-ratio:1.35;min-height:175px;border-radius:14px;overflow:hidden;background:#0d0d0d;border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 20px rgba(0,0,0,.18);--position:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;isolation:isolate;width:100%}
+    .compare-scene-slider .compare-layer,.compare-feature-slider .compare-layer{position:absolute;inset:0;overflow:hidden;background:#0b0b0b}
+    .compare-scene-slider .compare-layer img,.compare-feature-slider .compare-layer img{display:block;width:100%;height:100%;object-fit:cover;object-position:center center;transform:scale(1.04)}
+    .compare-scene-slider .compare-before,.compare-feature-slider .compare-before{opacity:1}
+    .compare-scene-slider .compare-before img,.compare-feature-slider .compare-before img{filter:brightness(1.28) saturate(.78) contrast(.82) hue-rotate(-2deg) sepia(.04)}
+    .compare-scene-slider .compare-after,.compare-feature-slider .compare-after{clip-path:inset(0 0 0 var(--position));opacity:1}
+    .compare-scene-slider .compare-after img,.compare-feature-slider .compare-after img{filter:saturate(1.2) contrast(1.1) brightness(1.08) hue-rotate(4deg)}
+    .compare-scene-slider .compare-label,.compare-feature-slider .compare-label{position:absolute;bottom:.55rem;z-index:6;display:flex;align-items:center;justify-content:center;padding:.38rem .55rem;border-radius:8px;text-transform:uppercase;letter-spacing:.14em;line-height:1;color:#f8f3ea;background:rgba(9,9,9,.52);border:1px solid rgba(255,255,255,.12);font-size:.42rem;font-weight:600}
+    .compare-scene-slider .compare-label-before,.compare-feature-slider .compare-label-before{left:.55rem}
+    .compare-scene-slider .compare-label-after,.compare-feature-slider .compare-label-after{right:.55rem}
+    .compare-scene-slider .compare-handle,.compare-feature-slider .compare-handle{position:absolute;left:var(--position);top:0;bottom:0;width:0;z-index:7;pointer-events:none}
+    .compare-scene-slider .compare-handle::before,.compare-feature-slider .compare-handle::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.85),rgba(255,255,255,.12));box-shadow:0 0 12px rgba(201,168,76,.34)}
+    .compare-scene-slider .compare-handle-core,.compare-feature-slider .compare-handle-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(13,13,13,.72);box-shadow:0 10px 18px rgba(0,0,0,.22),0 0 0 1px rgba(201,168,76,.08)}
+    .compare-scene-slider .compare-handle-core::before,.compare-feature-slider .compare-handle-core::before,.compare-scene-slider .compare-handle-core::after,.compare-feature-slider .compare-handle-core::after{content:"";position:absolute;top:50%;width:2px;height:10px;background:rgba(201,168,76,.95);transform:translateY(-50%);border-radius:999px}
+    .compare-scene-slider .compare-handle-core::before,.compare-feature-slider .compare-handle-core::before{left:12px}
+    .compare-scene-slider .compare-handle-core::after,.compare-feature-slider .compare-handle-core::after{right:12px}
+    .compare-scene-slider .compare-handle-core i,.compare-feature-slider .compare-handle-core i{display:block;width:7px;height:7px;position:relative;border-radius:50%;background:rgba(201,168,76,.95)}
+    .compare-scene-meta{display:flex;align-items:center;justify-content:space-between;gap:.45rem;padding:0 .1rem .1rem}
+    .compare-scene-name{font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    .compare-scene-camera{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
     .compare-thumb-tag{display:none}
+
+    @media(max-width:1100px){
+      .compare-main-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem;}
+    }
+    @media(max-width:760px){
+      .compare-main-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;}
+      .compare-scene-slider{min-height:160px;aspect-ratio:1.42;}
+      .compare-scene-name{font-size:.45rem;letter-spacing:.1em}
+      .compare-scene-camera{font-size:.48rem;letter-spacing:.08em}
+    }
+    @media(max-width:520px){
+      .compare-main-grid{grid-template-columns:1fr;gap:.8rem;}
+      .compare-feature-slider{min-height:220px;aspect-ratio:1.55;}
+      .compare-scene-slider{min-height:190px;aspect-ratio:1.45;}
+      .compare-scene-tile{padding:.55rem;}
+    }
 
     /* SCOPES BANNER */
     .scopes-banner{width:100%;overflow:hidden;margin-bottom:2.5rem}
@@ -439,11 +481,11 @@
       .cta-banner-copy h2{line-height:1.08}
       .cta-banner-actions{width:100%;justify-content:flex-start;gap:.6rem}
       .cta-banner .btn,.cta-banner .contact-btn{width:100%;min-width:0;}
-      .compare-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}
-      .compare-thumb{aspect-ratio:1.15;border-radius:14px;min-width:0}
-      .compare-thumb-label{font-size:.48rem;letter-spacing:.08em;max-width:calc(100% - 18px)}
+      .compare-gallery{grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem;max-width:100%}
+      .compare-thumb{aspect-ratio:1.1;border-radius:12px;min-width:0;min-height:92px}
+      .compare-thumb-label{font-size:.42rem;letter-spacing:.08em;max-width:calc(100% - 14px)}
       .compare-shell{max-width:100%;width:100%}
-      .compare-slider{min-height:220px;aspect-ratio:1.6/1}
+      .compare-slider{min-height:220px;aspect-ratio:1.6/1;width:min(100%, 760px)}
       .compare-layer img,.compare-thumb img{transform:scale(1.02)}
       .scopes-banner{max-width:100%;min-width:0}
       .scopes-banner svg{display:block;width:100%;max-width:100%;height:auto;overflow:hidden}
@@ -640,38 +682,7 @@
   <h2 class="section-title">Grade comparison</h2>
   <div class="divider"></div>
   <div class="compare-shell">
-    <div class="compare-slider" id="gradeCompareSlider" aria-label="Before and after comparison slider" aria-live="polite">
-      <div class="compare-layer compare-before"><img alt="Before color grade" loading="lazy" decoding="async" /></div>
-      <div class="compare-layer compare-after"><img alt="After color grade" loading="lazy" decoding="async" /></div>
-      <div class="compare-label compare-label-before">Log</div>
-      <div class="compare-label compare-label-after">Final</div>
-      <div class="compare-handle"><span class="compare-handle-core" aria-hidden="true"><i></i><em>Drag</em></span></div>
-    </div>
-    <div class="compare-meta">
-      <span class="compare-camera">Camera • Sony Venice</span>
-    </div>
-    <div class="compare-gallery" aria-label="Select a before and after grade reference">
-      <button class="compare-thumb compare-thumb-final is-active" type="button" data-before="slider/Still 2026-11-12 174233_1.2.1.png" data-after="slider/Still 2026-01-19 193613_1.193.1.jpg" data-scene="Scene 01" data-camera="Sony Venice" aria-label="Load scene 01 comparison">
-        <img src="slider/Still 2026-01-19 193613_1.193.1.jpg" alt="Final reference scene 01" loading="lazy" decoding="async" />
-        <span class="compare-thumb-label">Sony Venice</span>
-      </button>
-      <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/71.jpg" data-after="slider/71.jpg" data-scene="Scene 02" data-camera="Sony Venice" aria-label="Load scene 02 comparison">
-        <img src="slider/71.jpg" alt="Final reference scene 02" loading="lazy" decoding="async" />
-        <span class="compare-thumb-label">Sony Venice</span>
-      </button>
-      <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/Still 2026-05-14 161708_1.17.1.jpg" data-after="slider/Still 2026-05-14 161708_1.17.1.jpg" data-scene="Scene 03" data-camera="Arri" aria-label="Load scene 03 comparison">
-        <img src="slider/Still 2026-05-14 161708_1.17.1.jpg" alt="Final reference scene 03" loading="lazy" decoding="async" />
-        <span class="compare-thumb-label">Arri</span>
-      </button>
-      <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/Still 2026-10-05 140954_1.112.1.jpg" data-after="slider/Still 2026-10-05 140954_1.112.1.jpg" data-scene="Scene 04" data-camera="Panasonic Lumix" aria-label="Load scene 04 comparison">
-        <img src="slider/Still 2026-10-05 140954_1.112.1.jpg" alt="Final reference scene 04" loading="lazy" decoding="async" />
-        <span class="compare-thumb-label">Panasonic Lumix</span>
-      </button>
-      <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/2.2.1_2.2.1.png" data-after="slider/2.2.1_2.2.1.png" data-scene="Scene 05" data-camera="Sony FX6" aria-label="Load scene 05 comparison">
-        <img src="slider/2.2.1_2.2.1.png" alt="Final reference scene 05" loading="lazy" decoding="async" />
-        <span class="compare-thumb-label">Sony FX6</span>
-      </button>
-    </div>
+    <div class="compare-scene-grid" aria-label="Five before and after grade references"></div>
   </div>
 </section>
 
@@ -1594,10 +1605,104 @@
     const compareBeforeImage = gradeCompareSlider?.querySelector('.compare-before img');
     const compareAfterImage = gradeCompareSlider?.querySelector('.compare-after img');
     const compareCameraLabel = document.querySelector('.compare-camera');
-    const compareThumbs = Array.from(document.querySelectorAll('.compare-thumb'));
+    const compareSceneGrid = document.querySelector('.compare-scene-grid');
+    const compareScenes = [
+      { before: 'slider/Still 2026-11-12 174233_1.2.1.png', after: 'slider/Still 2026-01-19 193613_1.193.1.jpg', scene: 'Scene 01', camera: 'Sony Venice' },
+      { before: 'slider/71.jpg', after: 'slider/71.jpg', scene: 'Scene 02', camera: 'Sony Venice' },
+      { before: 'slider/Still 2026-05-14 161708_1.17.1.jpg', after: 'slider/Still 2026-05-14 161708_1.17.1.jpg', scene: 'Scene 03', camera: 'Arri' },
+      { before: 'slider/Still 2026-10-05 140954_1.112.1.jpg', after: 'slider/Still 2026-10-05 140954_1.112.1.jpg', scene: 'Scene 04', camera: 'Panasonic Lumix' },
+      { before: 'slider/2.2.1_2.2.1.png', after: 'slider/2.2.1_2.2.1.png', scene: 'Scene 05', camera: 'Sony FX6' }
+    ];
+    let compareThumbs = [];
     const compareImageCache = new Set();
     const compareSection = document.querySelector('.before-after-section');
     let compareDragging = false;
+
+    function renderCompareMiniCards() {
+      if (!compareSceneGrid) return;
+
+      const [feature, ...secondary] = compareScenes;
+      const featureMarkup = feature ? `
+        <div class="compare-feature">
+          <div class="compare-feature-slider" data-before="${feature.before}" data-after="${feature.after}" data-scene="${feature.scene}" data-camera="${feature.camera}" aria-label="${feature.scene} before and after comparison" style="--position:50%">
+            <div class="compare-layer compare-before"><img src="${feature.before}" alt="Before color grade ${feature.scene}" loading="eager" decoding="async"></div>
+            <div class="compare-layer compare-after"><img src="${feature.after}" alt="After color grade ${feature.scene}" loading="eager" decoding="async"></div>
+            <div class="compare-label compare-label-before">Log</div>
+            <div class="compare-label compare-label-after">Final</div>
+            <div class="compare-handle"><span class="compare-handle-core" aria-hidden="true"><i></i><em>Drag</em></span></div>
+          </div>
+          <div class="compare-scene-meta">
+            <span class="compare-scene-name">${feature.scene}</span>
+            <span class="compare-scene-camera">${feature.camera}</span>
+          </div>
+        </div>
+      ` : '';
+
+      const secondaryMarkup = secondary.length ? `
+        <div class="compare-main-grid">
+          ${secondary.map((scene) => {
+            const { before, after, camera } = scene;
+            return `
+              <div class="compare-scene-tile">
+                <div class="compare-scene-slider" data-before="${before}" data-after="${after}" data-scene="${scene.scene}" data-camera="${camera}" aria-label="${scene.scene} before and after comparison" style="--position:50%">
+                  <div class="compare-layer compare-before"><img src="${before}" alt="Before color grade ${scene.scene}" loading="lazy" decoding="async"></div>
+                  <div class="compare-layer compare-after"><img src="${after}" alt="After color grade ${scene.scene}" loading="lazy" decoding="async"></div>
+                  <div class="compare-label compare-label-before">Log</div>
+                  <div class="compare-label compare-label-after">Final</div>
+                  <div class="compare-handle"><span class="compare-handle-core" aria-hidden="true"><i></i><em>Drag</em></span></div>
+                </div>
+                <div class="compare-scene-meta">
+                  <span class="compare-scene-name">${scene.scene}</span>
+                  <span class="compare-scene-camera">${camera}</span>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      ` : '';
+
+      compareSceneGrid.innerHTML = `${featureMarkup}${secondaryMarkup}`;
+
+      compareThumbs = Array.from(document.querySelectorAll('.compare-feature-slider, .compare-scene-slider'));
+      compareThumbs.forEach((slider) => {
+        const beforeImage = slider.querySelector('.compare-before img');
+        const afterImage = slider.querySelector('.compare-after img');
+        let sliderIsDragging = false;
+
+        const setFromPointerX = (clientX) => {
+          const rect = slider.getBoundingClientRect();
+          const relative = clamp(((clientX - rect.left) / rect.width) * 100, 0, 100);
+          slider.style.setProperty('--position', `${relative}%`);
+        };
+
+        slider.addEventListener('pointerdown', (event) => {
+          sliderIsDragging = true;
+          slider.setPointerCapture?.(event.pointerId);
+          setFromPointerX(event.clientX);
+          event.preventDefault();
+        });
+
+        slider.addEventListener('pointermove', (event) => {
+          if (!sliderIsDragging) return;
+          setFromPointerX(event.clientX);
+        });
+
+        slider.addEventListener('pointerup', () => {
+          sliderIsDragging = false;
+        });
+
+        slider.addEventListener('pointercancel', () => {
+          sliderIsDragging = false;
+        });
+
+        slider.addEventListener('pointerleave', () => {
+          sliderIsDragging = false;
+        });
+
+        if (beforeImage) beforeImage.loading = 'lazy';
+        if (afterImage) afterImage.loading = 'lazy';
+      });
+    }
 
     function preloadCompareImage(src) {
       if (!src || compareImageCache.has(src)) return;
@@ -1724,19 +1829,13 @@
       updateGradeCompare(50);
     }
 
-    compareThumbs.forEach((thumb) => {
-      const img = thumb.querySelector('img');
-      if (img) {
-        img.loading = 'lazy';
-        img.decoding = 'async';
-      }
-      thumb.addEventListener('click', () => {
-        loadCompareOnDemand(thumb);
-      });
-    });
+    renderCompareMiniCards();
 
     if (compareThumbs.length) {
-      loadInitialCompareScene();
+      const initialThumb = compareThumbs[0];
+      if (initialThumb) {
+        setCompareScene(initialThumb);
+      }
     }
 
     const reviewCards = Array.from(document.querySelectorAll('#reviews .review-card'));
