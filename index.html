@@ -641,8 +641,8 @@
   <div class="divider"></div>
   <div class="compare-shell">
     <div class="compare-slider" id="gradeCompareSlider" aria-label="Before and after comparison slider" aria-live="polite">
-      <div class="compare-layer compare-before"><img alt="Before color grade" loading="eager" decoding="async" /></div>
-      <div class="compare-layer compare-after"><img alt="After color grade" loading="eager" decoding="async" /></div>
+      <div class="compare-layer compare-before"><img alt="Before color grade" loading="lazy" decoding="async" /></div>
+      <div class="compare-layer compare-after"><img alt="After color grade" loading="lazy" decoding="async" /></div>
       <div class="compare-label compare-label-before">Log</div>
       <div class="compare-label compare-label-after">Final</div>
       <div class="compare-handle"><span class="compare-handle-core" aria-hidden="true"><i></i><em>Drag</em></span></div>
@@ -1596,6 +1596,7 @@
     const compareCameraLabel = document.querySelector('.compare-camera');
     const compareThumbs = Array.from(document.querySelectorAll('.compare-thumb'));
     const compareImageCache = new Set();
+    const compareSection = document.querySelector('.before-after-section');
     let compareDragging = false;
 
     function preloadCompareImage(src) {
@@ -1603,7 +1604,7 @@
       compareImageCache.add(src);
       const img = new Image();
       img.decoding = 'async';
-      img.loading = 'eager';
+      img.loading = 'lazy';
       img.fetchPriority = 'low';
       img.src = src;
       img.onerror = () => {
@@ -1631,15 +1632,45 @@
         compareAfterImage.src = after;
       }
 
-      compareBeforeImage.loading = 'eager';
+      compareBeforeImage.loading = 'lazy';
       compareBeforeImage.decoding = 'async';
       compareBeforeImage.alt = `Before color grade ${scene}`;
-      compareAfterImage.loading = 'eager';
+      compareAfterImage.loading = 'lazy';
       compareAfterImage.decoding = 'async';
       compareAfterImage.alt = `After color grade ${scene}`;
       if (compareCameraLabel) compareCameraLabel.textContent = `Camera • ${camera}`;
 
       compareThumbs.forEach((thumb) => thumb.classList.toggle('is-active', thumb === button));
+    }
+
+    function loadInitialCompareScene() {
+      if (!compareThumbs.length || !compareSection || compareSection.dataset.compareLoaded === 'true') return;
+      compareSection.dataset.compareLoaded = 'true';
+
+      const initialThumb = compareThumbs[0];
+      if (!initialThumb) return;
+
+      const runLoad = () => {
+        preloadCompareImage(initialThumb.dataset.before);
+        preloadCompareImage(initialThumb.dataset.after);
+        setCompareScene(initialThumb);
+      };
+
+      if (document.readyState === 'complete') {
+        requestAnimationFrame(runLoad);
+        return;
+      }
+
+      window.addEventListener('load', runLoad, { once: true });
+    }
+
+    function loadCompareOnDemand(button) {
+      const before = button.dataset.before;
+      const after = button.dataset.after;
+      if (!before || !after) return;
+      const pending = [before, after].filter(Boolean);
+      pending.forEach((src) => preloadCompareImage(src));
+      setCompareScene(button);
     }
 
     if (gradeCompareSlider) {
@@ -1683,19 +1714,12 @@
         img.decoding = 'async';
       }
       thumb.addEventListener('click', () => {
-        const before = thumb.dataset.before;
-        const after = thumb.dataset.after;
-        preloadCompareImage(before);
-        preloadCompareImage(after);
-        setCompareScene(thumb);
+        loadCompareOnDemand(thumb);
       });
     });
 
     if (compareThumbs.length) {
-      const initialThumb = compareThumbs[0] || compareThumbs[1];
-      if (initialThumb) {
-        setCompareScene(initialThumb);
-      }
+      loadInitialCompareScene();
     }
 
     const reviewCards = Array.from(document.querySelectorAll('#reviews .review-card'));
