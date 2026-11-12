@@ -232,7 +232,7 @@
 
     .compare-scene-grid{display:grid;gap:1rem;max-width:1200px;margin:0 auto}
     .compare-feature{display:grid;gap:.9rem}
-    .compare-feature-slider{position:relative;aspect-ratio:2048 / 858;max-height:610px;min-height:260px;width:100%;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#111;box-shadow:0 24px 48px rgba(0,0,0,.26);--position:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;isolation:isolate}
+    .compare-feature-slider{position:relative;aspect-ratio:16 / 9;max-height:610px;min-height:260px;width:100%;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#111;box-shadow:0 24px 48px rgba(0,0,0,.26);--position:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;isolation:isolate}
     .compare-main-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
     .compare-scene-tile{display:grid;gap:.55rem;padding:.55rem;border-radius:16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 28px rgba(0,0,0,.18);min-width:0}
     .compare-scene-slider{position:relative;aspect-ratio:1.35;min-height:175px;border-radius:14px;overflow:hidden;background:#0d0d0d;border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 20px rgba(0,0,0,.18);--position:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;isolation:isolate;width:100%}
@@ -271,6 +271,7 @@
       .compare-feature-slider{min-height:220px;aspect-ratio:1.55;}
       .compare-scene-slider{min-height:190px;aspect-ratio:1.45;}
       .compare-scene-tile{padding:.55rem;}
+      .compare-feature-slider .compare-layer img,.compare-scene-slider .compare-layer img{object-position:center center}
     }
 
     /* SCOPES BANNER */
@@ -1713,6 +1714,18 @@
     function preloadCompareImage(src, priority = 'high') {
       if (!src || compareImageCache.has(src)) return;
       compareImageCache.add(src);
+
+      const existingLink = document.querySelector(`link[data-compare-preload="${src}"]`);
+      if (!existingLink) {
+        const preloadLink = document.createElement('link');
+        preloadLink.rel = 'preload';
+        preloadLink.as = 'image';
+        preloadLink.href = src;
+        preloadLink.dataset.comparePreload = src;
+        preloadLink.fetchPriority = priority;
+        document.head.appendChild(preloadLink);
+      }
+
       const img = new Image();
       img.decoding = 'async';
       img.loading = 'eager';
