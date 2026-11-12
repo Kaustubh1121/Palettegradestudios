@@ -220,9 +220,9 @@
     .compare-handle-core::after{right:18px;box-shadow:0 0 10px rgba(201,168,76,.35)}
     .compare-handle-core i{display:block;width:10px;height:10px;position:relative;border-radius:50%;background:rgba(201,168,76,.95);box-shadow:0 0 0 5px rgba(201,168,76,.12)}
     .compare-handle-core em{display:none}
-    .compare-card-name{display:flex;align-items:center;justify-content:flex-end;width:100%;padding:.2rem .2rem;border-radius:0;background:transparent;border:none;box-shadow:none;color:var(--gold);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;line-height:1.2;text-align:right}
-    .compare-gallery{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:.72rem;margin:1rem auto 0;max-width:1100px}
-    .compare-gallery .compare-card{gap:.56rem}
+    .compare-card-name{display:flex;align-items:center;justify-content:flex-end;width:100%;padding:.16rem .12rem 0;border-radius:0;background:transparent;border:none;box-shadow:none;color:var(--gold);font-size:.9rem;letter-spacing:.14em;text-transform:uppercase;line-height:1.2;text-align:right}
+    .compare-gallery{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:.55rem;margin:1rem auto 0;max-width:1100px}
+    .compare-gallery .compare-card{gap:.52rem}
     .compare-gallery .compare-slider{position:relative;display:block;aspect-ratio:16 / 9;min-height:220px;width:100%;margin:0 auto;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0d;box-shadow:0 16px 28px rgba(0,0,0,.18);--position:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;isolation:isolate}
     .compare-gallery .compare-slider .compare-label{padding:.42rem .54rem;font-size:.38rem;letter-spacing:.12em;bottom:.48rem}
     .compare-gallery .compare-slider .compare-handle-core{width:34px;height:34px}
@@ -230,7 +230,7 @@
     .compare-gallery .compare-slider .compare-handle-core i{width:6px;height:6px}
     .compare-gallery .compare-slider .compare-label-before{left:.48rem}
     .compare-gallery .compare-slider .compare-label-after{right:.48rem}
-    .compare-gallery .compare-card-name{padding:.2rem .2rem;border-radius:0;background:transparent;border:none;box-shadow:none;font-size:.42rem;letter-spacing:.1em}
+    .compare-gallery .compare-card-name{padding:0 .12rem;border-radius:0;background:transparent;border:none;box-shadow:none;font-size:.82rem;letter-spacing:.1em}
     .compare-thumb{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0d;box-shadow:0 14px 28px rgba(0,0,0,.16);border-radius:14px;padding:0;cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease,opacity .2s ease,text-shadow .2s ease;text-align:left;display:block;aspect-ratio:1.22;min-height:110px}
     .compare-thumb::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(201,168,76,.08),transparent 38%,transparent 68%,rgba(201,168,76,.08));pointer-events:none;z-index:1}
     .compare-thumb:hover{transform:translateY(-2px);border-color:rgba(201,168,76,.32);box-shadow:0 0 0 1px rgba(201,168,76,.12),0 16px 30px rgba(0,0,0,.2),0 0 18px rgba(201,168,76,.12)}
@@ -303,7 +303,15 @@
       .compare-scene-slider[data-scene="Scene 03"],.compare-scene-slider[data-scene="Scene 05"]{aspect-ratio:1.2}
       .compare-scene-slider{min-height:190px;aspect-ratio:1.45;}
       .compare-scene-tile{padding:.55rem;}
-      .compare-feature-slider .compare-layer img,.compare-scene-slider .compare-layer img{object-position:center center;object-fit:contain;transform:none}
+      .compare-layer img,
+      .compare-before img,
+      .compare-after img,
+      .compare-feature-slider .compare-layer img,
+      .compare-scene-slider .compare-layer img{
+        object-fit:cover;
+        object-position:center center;
+        transform:none;
+      }
       .compare-scene-slider[data-scene="Scene 01"] .compare-before img, .compare-feature-slider[data-scene="Scene 01"] .compare-before img,
       .compare-scene-slider[data-scene="Scene 03"] .compare-before img, .compare-feature-slider[data-scene="Scene 03"] .compare-before img,
       .compare-scene-slider[data-scene="Scene 05"] .compare-before img, .compare-feature-slider[data-scene="Scene 05"] .compare-before img{
