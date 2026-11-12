@@ -641,8 +641,8 @@
   <div class="divider"></div>
   <div class="compare-shell">
     <div class="compare-slider" id="gradeCompareSlider" aria-label="Before and after comparison slider" aria-live="polite">
-      <div class="compare-layer compare-before"><img src="slider/Still 2026-11-12 174233_1.2.1.png" alt="Before color grade" /></div>
-      <div class="compare-layer compare-after"><img src="slider/Still 2026-01-19 193613_1.193.1.jpg" alt="After color grade" /></div>
+      <div class="compare-layer compare-before"><img alt="Before color grade" loading="eager" decoding="async" /></div>
+      <div class="compare-layer compare-after"><img alt="After color grade" loading="eager" decoding="async" /></div>
       <div class="compare-label compare-label-before">Log</div>
       <div class="compare-label compare-label-after">Final</div>
       <div class="compare-handle"><span class="compare-handle-core" aria-hidden="true"><i></i><em>Drag</em></span></div>
@@ -652,23 +652,23 @@
     </div>
     <div class="compare-gallery" aria-label="Select a before and after grade reference">
       <button class="compare-thumb compare-thumb-final is-active" type="button" data-before="slider/Still 2026-11-12 174233_1.2.1.png" data-after="slider/Still 2026-01-19 193613_1.193.1.jpg" data-scene="Scene 01" data-camera="Sony Venice" aria-label="Load scene 01 comparison">
-        <img src="slider/Still 2026-01-19 193613_1.193.1.jpg" alt="Final reference scene 01" />
+        <img src="slider/Still 2026-01-19 193613_1.193.1.jpg" alt="Final reference scene 01" loading="lazy" decoding="async" />
         <span class="compare-thumb-label">Sony Venice</span>
       </button>
       <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/Still 2026-11-12 174233_1.1.1.png" data-after="slider/71.jpg" data-scene="Scene 02" data-camera="Sony Venice" aria-label="Load scene 02 comparison">
-        <img src="slider/71.jpg" alt="Final reference scene 02" />
+        <img src="slider/71.jpg" alt="Final reference scene 02" loading="lazy" decoding="async" />
         <span class="compare-thumb-label">Sony Venice</span>
       </button>
       <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/Still 2026-05-14 161708_1.17.1.jpg" data-after="slider/Still 2026-05-14 161708_1.17.1.jpg" data-scene="Scene 03" data-camera="Arri" aria-label="Load scene 03 comparison">
-        <img src="slider/Still 2026-05-14 161708_1.17.1.jpg" alt="Final reference scene 03" />
+        <img src="slider/Still 2026-05-14 161708_1.17.1.jpg" alt="Final reference scene 03" loading="lazy" decoding="async" />
         <span class="compare-thumb-label">Arri</span>
       </button>
       <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/Still 2026-11-12 174233_1.5.1.png" data-after="slider/Still 2026-10-05 140954_1.112.1.jpg" data-scene="Scene 04" data-camera="Panasonic Lumix" aria-label="Load scene 04 comparison">
-        <img src="slider/Still 2026-10-05 140954_1.112.1.jpg" alt="Final reference scene 04" />
+        <img src="slider/Still 2026-10-05 140954_1.112.1.jpg" alt="Final reference scene 04" loading="lazy" decoding="async" />
         <span class="compare-thumb-label">Panasonic Lumix</span>
       </button>
       <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/2.2.1_2.2.1.png" data-after="slider/2.2.1_2.2.1.png" data-scene="Scene 05" data-camera="Sony FX6" aria-label="Load scene 05 comparison">
-        <img src="slider/2.2.1_2.2.1.png" alt="Final reference scene 05" />
+        <img src="slider/2.2.1_2.2.1.png" alt="Final reference scene 05" loading="lazy" decoding="async" />
         <span class="compare-thumb-label">Sony FX6</span>
       </button>
     </div>
@@ -1603,7 +1603,12 @@
       compareImageCache.add(src);
       const img = new Image();
       img.decoding = 'async';
+      img.loading = 'eager';
+      img.fetchPriority = 'low';
       img.src = src;
+      img.onerror = () => {
+        compareImageCache.delete(src);
+      };
     }
 
     function updateGradeCompare(value) {
@@ -1619,12 +1624,18 @@
       const scene = button.dataset.scene || 'Scene';
       const camera = button.dataset.camera || 'Sony Venice';
 
-      preloadCompareImage(before);
-      preloadCompareImage(after);
+      if (!compareBeforeImage.src || compareBeforeImage.src !== new URL(before, window.location.href).href) {
+        compareBeforeImage.src = before;
+      }
+      if (!compareAfterImage.src || compareAfterImage.src !== new URL(after, window.location.href).href) {
+        compareAfterImage.src = after;
+      }
 
-      compareBeforeImage.src = before;
+      compareBeforeImage.loading = 'eager';
+      compareBeforeImage.decoding = 'async';
       compareBeforeImage.alt = `Before color grade ${scene}`;
-      compareAfterImage.src = after;
+      compareAfterImage.loading = 'eager';
+      compareAfterImage.decoding = 'async';
       compareAfterImage.alt = `After color grade ${scene}`;
       if (compareCameraLabel) compareCameraLabel.textContent = `Camera • ${camera}`;
 
@@ -1666,15 +1677,25 @@
     }
 
     compareThumbs.forEach((thumb) => {
-      const before = thumb.dataset.before;
-      const after = thumb.dataset.after;
-      preloadCompareImage(before);
-      preloadCompareImage(after);
-      thumb.addEventListener('click', () => setCompareScene(thumb));
+      const img = thumb.querySelector('img');
+      if (img) {
+        img.loading = 'lazy';
+        img.decoding = 'async';
+      }
+      thumb.addEventListener('click', () => {
+        const before = thumb.dataset.before;
+        const after = thumb.dataset.after;
+        preloadCompareImage(before);
+        preloadCompareImage(after);
+        setCompareScene(thumb);
+      });
     });
 
     if (compareThumbs.length) {
-      setCompareScene(compareThumbs[0] || compareThumbs[1]);
+      const initialThumb = compareThumbs[0] || compareThumbs[1];
+      if (initialThumb) {
+        setCompareScene(initialThumb);
+      }
     }
 
     const reviewCards = Array.from(document.querySelectorAll('#reviews .review-card'));
