@@ -196,37 +196,47 @@
 
     .before-after-section{padding:5rem 5vw;background:linear-gradient(180deg,rgba(7,7,7,0.96),rgba(17,17,17,0.98));border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
     .compare-shell{display:grid;gap:1rem;max-width:1200px;margin:0 auto}
-    .compare-slider{position:relative;aspect-ratio:2048 / 858;max-height:700px;min-height:260px;width:min(100%, 860px);margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0d;box-shadow:0 24px 48px rgba(0,0,0,.26);--position:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;isolation:isolate}
+    .compare-card{display:grid;gap:.65rem;min-width:0;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));border:1px solid rgba(201,168,76,.15);border-radius:20px;padding:.7rem;box-shadow:0 18px 38px rgba(0,0,0,.18)}
+    .compare-shell > .compare-card{max-width:1100px;width:100%;margin:0 auto}
+    .compare-slider{position:relative;aspect-ratio:16 / 9;max-height:620px;min-height:320px;width:100%;margin:0 auto;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0d;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02),0 24px 48px rgba(0,0,0,.26);--position:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;isolation:isolate;pointer-events:auto;transition:box-shadow .2s ease,transform .2s ease}
+    .compare-shell > .compare-card .compare-slider{aspect-ratio:16 / 9;min-height:340px;max-height:620px}
+    .compare-slider:hover{box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 0 0 1px rgba(255,255,255,.04),0 28px 54px rgba(0,0,0,.3),0 0 28px rgba(255,255,255,.04)}
+    .compare-slider:active{cursor:grabbing;transform:translateY(-1px)}
     .compare-slider::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.12));pointer-events:none;z-index:3}
-    .compare-layer{position:absolute;inset:0;transition:none;z-index:1;overflow:hidden;background:#0b0b0b}
-    .compare-layer img{display:block;width:100%;height:100%;object-fit:cover;object-position:center center;transform:scale(1.04)}
+    .compare-layer{position:absolute;inset:0;transition:clip-path 0s linear,opacity .12s ease,filter .12s ease;z-index:1;overflow:hidden;background:#0b0b0b;will-change:clip-path,opacity,filter}
+    .compare-layer img{display:block;width:100%;height:100%;object-fit:contain;object-position:center center;transform:none;transition:transform .12s ease,filter .12s ease}
     .compare-before{z-index:1;opacity:1}
-    .compare-before img{filter:saturate(.72) brightness(1.04) contrast(.76) hue-rotate(-1deg) sepia(.01)}
-    .compare-after{z-index:2;clip-path:inset(0 0 0 var(--position));opacity:1}
-    .compare-after img{filter:saturate(1.26) contrast(1.12) brightness(1.08) hue-rotate(4deg)}
-    .compare-label{position:absolute;bottom:1rem;z-index:6;display:flex;align-items:center;justify-content:center;padding:.58rem .9rem;border-radius:10px;text-transform:uppercase;letter-spacing:.18em;line-height:1;color:#f8f3ea;background:rgba(9,9,9,.52);border:1px solid rgba(255,255,255,.12);font-size:.66rem;font-weight:600;text-shadow:0 2px 8px rgba(0,0,0,.5);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);box-shadow:0 8px 18px rgba(0,0,0,.12)}
-    .compare-label-before{left:1rem;top:auto;background:rgba(9,9,9,.55);border-color:rgba(255,255,255,.12)}
-    .compare-label-after{right:1rem;top:auto;bottom:1rem;background:rgba(9,9,9,.55);border-color:rgba(255,255,255,.12);color:#f8f3ea;box-shadow:0 8px 18px rgba(0,0,0,.12)}
-    .compare-handle{position:absolute;left:var(--position);top:0;bottom:0;width:0;z-index:7;pointer-events:none}
+    .compare-before img{filter:saturate(.7) brightness(1.14) contrast(.88) grayscale(.08) hue-rotate(-1deg) sepia(.02)}
+    .compare-after{z-index:2;clip-path:inset(0 0 0 var(--position));opacity:1;transition:clip-path 0s linear,opacity .12s ease,filter .12s ease}
+    .compare-after img{filter:saturate(1.12) contrast(1.08) brightness(1.05) hue-rotate(2deg)}
+    .compare-label{position:absolute;bottom:1rem;z-index:6;display:flex;align-items:center;justify-content:center;padding:.58rem .9rem;border-radius:10px;text-transform:uppercase;letter-spacing:.18em;line-height:1;color:#f5f5f5;background:rgba(10,10,10,.78);border:1px solid rgba(255,255,255,.18);font-size:.66rem;font-weight:700;text-shadow:none;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);box-shadow:0 8px 18px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.12)}
+    .compare-label-before{left:1rem;top:auto;background:rgba(10,10,10,.78);border-color:rgba(255,255,255,.18);color:#f5f5f5}
+    .compare-label-after{right:1rem;top:auto;bottom:1rem;background:rgba(10,10,10,.78);border-color:rgba(255,255,255,.18);color:#f5f5f5;box-shadow:0 8px 18px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.12)}
+    .compare-handle{position:absolute;left:calc(var(--position) - 38px);top:0;bottom:0;width:76px;z-index:7;pointer-events:auto;display:flex;align-items:center;justify-content:center}
     .compare-handle::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.85),rgba(255,255,255,.12));box-shadow:0 0 12px rgba(201,168,76,.34)}
-    .compare-handle-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:58px;height:58px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(13,13,13,.72);box-shadow:0 12px 26px rgba(0,0,0,.28),0 0 0 1px rgba(201,168,76,.08)}
+    .compare-handle-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:58px;height:58px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(13,13,13,.72);box-shadow:0 12px 26px rgba(0,0,0,.28),0 0 0 1px rgba(201,168,76,.08);pointer-events:none}
     .compare-handle-core::before,.compare-handle-core::after{content:"";position:absolute;top:50%;width:2px;height:16px;background:rgba(201,168,76,.95);transform:translateY(-50%);border-radius:999px}
     .compare-handle-core::before{left:18px;box-shadow:0 0 10px rgba(201,168,76,.35)}
     .compare-handle-core::after{right:18px;box-shadow:0 0 10px rgba(201,168,76,.35)}
     .compare-handle-core i{display:block;width:10px;height:10px;position:relative;border-radius:50%;background:rgba(201,168,76,.95);box-shadow:0 0 0 5px rgba(201,168,76,.12)}
     .compare-handle-core em{display:none}
-    .compare-meta{position:relative;display:flex;justify-content:center;align-items:center;margin-top:.5rem;padding:0;background:transparent;border:none;box-shadow:none;overflow:visible;transition:none}
-    .compare-meta::before{content:none}
-    .compare-meta:hover{border:none;box-shadow:none;transform:none}
-    .compare-camera{position:relative;z-index:1;display:inline-block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#f3eee4;padding:.18rem .42rem;border-radius:999px;background:rgba(12,12,12,.38);border:1px solid rgba(201,168,76,.18);min-height:22px;display:inline-flex;align-items:center;justify-content:center;transition:text-shadow .2s ease,filter .2s ease,box-shadow .2s ease,border-color .2s ease}
-    .compare-meta:hover .compare-camera{border-color:rgba(201,168,76,.32);box-shadow:0 0 0 1px rgba(201,168,76,.08),0 0 16px rgba(201,168,76,.2);text-shadow:0 0 14px rgba(201,168,76,.28);filter:brightness(1.08)}
-    .compare-gallery{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.62rem;margin:1rem auto 0;max-width:860px}
+    .compare-card-name{display:flex;align-items:center;justify-content:flex-end;width:100%;padding:.2rem .2rem;border-radius:0;background:transparent;border:none;box-shadow:none;color:var(--gold);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;line-height:1.2;text-align:right}
+    .compare-gallery{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:.72rem;margin:1rem auto 0;max-width:1100px}
+    .compare-gallery .compare-card{gap:.56rem}
+    .compare-gallery .compare-slider{position:relative;display:block;aspect-ratio:16 / 9;min-height:220px;width:100%;margin:0 auto;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0d;box-shadow:0 16px 28px rgba(0,0,0,.18);--position:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;isolation:isolate}
+    .compare-gallery .compare-slider .compare-label{padding:.42rem .54rem;font-size:.38rem;letter-spacing:.12em;bottom:.48rem}
+    .compare-gallery .compare-slider .compare-handle-core{width:34px;height:34px}
+    .compare-gallery .compare-slider .compare-handle-core::before,.compare-gallery .compare-slider .compare-handle-core::after{height:8px}
+    .compare-gallery .compare-slider .compare-handle-core i{width:6px;height:6px}
+    .compare-gallery .compare-slider .compare-label-before{left:.48rem}
+    .compare-gallery .compare-slider .compare-label-after{right:.48rem}
+    .compare-gallery .compare-card-name{padding:.2rem .2rem;border-radius:0;background:transparent;border:none;box-shadow:none;font-size:.42rem;letter-spacing:.1em}
     .compare-thumb{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0d;box-shadow:0 14px 28px rgba(0,0,0,.16);border-radius:14px;padding:0;cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease,opacity .2s ease,text-shadow .2s ease;text-align:left;display:block;aspect-ratio:1.22;min-height:110px}
     .compare-thumb::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(201,168,76,.08),transparent 38%,transparent 68%,rgba(201,168,76,.08));pointer-events:none;z-index:1}
     .compare-thumb:hover{transform:translateY(-2px);border-color:rgba(201,168,76,.32);box-shadow:0 0 0 1px rgba(201,168,76,.12),0 16px 30px rgba(0,0,0,.2),0 0 18px rgba(201,168,76,.12)}
     .compare-thumb.is-active{border-color:rgba(201,168,76,.52);box-shadow:0 0 0 1px rgba(201,168,76,.26),0 16px 30px rgba(0,0,0,.2)}
-    .compare-thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(1.2) contrast(1.06) brightness(1.04)}
-    .compare-thumb:nth-child(3) img,.compare-thumb:nth-child(5) img{width:112%;height:112%;margin-left:-6%;margin-top:-6%;object-fit:cover;object-position:center;transform:scale(1.08);transform-origin:center}
+    .compare-thumb img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;filter:saturate(1.2) contrast(1.06) brightness(1.04);transform:none}
+    .compare-thumb:nth-child(3) img,.compare-thumb:nth-child(5) img{width:100%;height:100%;margin:0;object-fit:contain;object-position:center;transform:none;transform-origin:center}
     .compare-thumb-label,.compare-thumb-tag{position:absolute;left:8px;z-index:2;padding:.24rem .48rem;border-radius:999px;background:rgba(10,10,10,.56);border:1px solid rgba(255,255,255,.08);font-size:.46rem;letter-spacing:.1em;text-transform:uppercase;color:#f7f1d8;line-height:1.2}
     .compare-thumb-label{top:8px;max-width:calc(100% - 16px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
@@ -238,61 +248,71 @@
     .compare-scene-tile{display:grid;gap:.55rem;padding:.55rem;border-radius:16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 28px rgba(0,0,0,.18);min-width:0}
     .compare-scene-slider{position:relative;aspect-ratio:1.35;min-height:175px;border-radius:14px;overflow:hidden;background:#0d0d0d;border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 20px rgba(0,0,0,.18);--position:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;isolation:isolate;width:100%}
     .compare-scene-slider .compare-layer,.compare-feature-slider .compare-layer{position:absolute;inset:0;overflow:hidden;background:#0b0b0b}
-    .compare-scene-slider .compare-layer img,.compare-feature-slider .compare-layer img{display:block;width:100%;height:100%;object-fit:cover;object-position:center center;transform:scale(1.04)}
+    .compare-scene-slider .compare-layer img,.compare-feature-slider .compare-layer img{display:block;width:100%;height:100%;object-fit:contain;object-position:center center;transform:none}
     .compare-scene-slider[data-scene="Scene 01"] .compare-before img, .compare-feature-slider[data-scene="Scene 01"] .compare-before img,
     .compare-scene-slider[data-scene="Scene 03"] .compare-before img, .compare-feature-slider[data-scene="Scene 03"] .compare-before img,
     .compare-scene-slider[data-scene="Scene 05"] .compare-before img, .compare-feature-slider[data-scene="Scene 05"] .compare-before img{
-      object-position:62% 48%;
-      transform:scale(1.18);
+      object-position:center center;
+      transform:none;
     }
     .compare-scene-slider .compare-before,.compare-feature-slider .compare-before{opacity:1}
-    .compare-scene-slider .compare-before img,.compare-feature-slider .compare-before img{filter:brightness(1.28) saturate(.78) contrast(.82) hue-rotate(-2deg) sepia(.04)}
+    .compare-scene-slider .compare-before img,.compare-feature-slider .compare-before img{filter:brightness(1.18) saturate(.68) contrast(.9) grayscale(.08) hue-rotate(-1deg) sepia(.02)}
     .compare-scene-slider .compare-after,.compare-feature-slider .compare-after{clip-path:inset(0 0 0 var(--position));opacity:1}
-    .compare-scene-slider .compare-after img,.compare-feature-slider .compare-after img{filter:saturate(1.2) contrast(1.1) brightness(1.08) hue-rotate(4deg)}
-    .compare-scene-slider .compare-label,.compare-feature-slider .compare-label{position:absolute;bottom:.55rem;z-index:6;display:flex;align-items:center;justify-content:center;padding:.38rem .55rem;border-radius:8px;text-transform:uppercase;letter-spacing:.14em;line-height:1;color:#f8f3ea;background:rgba(9,9,9,.52);border:1px solid rgba(255,255,255,.12);font-size:.42rem;font-weight:600}
+    .compare-scene-slider .compare-after img,.compare-feature-slider .compare-after img{filter:saturate(1.1) contrast(1.06) brightness(1.04) hue-rotate(2deg)}
+    .compare-scene-slider .compare-label,.compare-feature-slider .compare-label{position:absolute;bottom:.55rem;z-index:6;display:flex;align-items:center;justify-content:center;padding:.38rem .55rem;border-radius:8px;text-transform:uppercase;letter-spacing:.14em;line-height:1;color:#f8f3ea;background:rgba(9,9,9,.52);border:1px solid rgba(255,255,255,.12);font-size:.5rem;font-weight:600}
     .compare-scene-slider .compare-label-before,.compare-feature-slider .compare-label-before{left:.55rem}
     .compare-scene-slider .compare-label-after,.compare-feature-slider .compare-label-after{right:.55rem}
-    .compare-scene-slider .compare-handle,.compare-feature-slider .compare-handle{position:absolute;left:var(--position);top:0;bottom:0;width:0;z-index:7;pointer-events:none}
+    .compare-scene-slider .compare-handle,.compare-feature-slider .compare-handle{position:absolute;left:calc(var(--position) - 22px);top:0;bottom:0;width:44px;z-index:7;pointer-events:auto;display:flex;align-items:center;justify-content:center}
     .compare-scene-slider .compare-handle::before,.compare-feature-slider .compare-handle::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.85),rgba(255,255,255,.12));box-shadow:0 0 12px rgba(201,168,76,.34)}
-    .compare-scene-slider .compare-handle-core,.compare-feature-slider .compare-handle-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(13,13,13,.72);box-shadow:0 10px 18px rgba(0,0,0,.22),0 0 0 1px rgba(201,168,76,.08)}
+    .compare-scene-slider .compare-handle-core,.compare-feature-slider .compare-handle-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(13,13,13,.72);box-shadow:0 10px 18px rgba(0,0,0,.22),0 0 0 1px rgba(201,168,76,.08);pointer-events:none}
     .compare-scene-slider .compare-handle-core::before,.compare-feature-slider .compare-handle-core::before,.compare-scene-slider .compare-handle-core::after,.compare-feature-slider .compare-handle-core::after{content:"";position:absolute;top:50%;width:2px;height:10px;background:rgba(201,168,76,.95);transform:translateY(-50%);border-radius:999px}
     .compare-scene-slider .compare-handle-core::before,.compare-feature-slider .compare-handle-core::before{left:12px}
     .compare-scene-slider .compare-handle-core::after,.compare-feature-slider .compare-handle-core::after{right:12px}
     .compare-scene-slider .compare-handle-core i,.compare-feature-slider .compare-handle-core i{display:block;width:7px;height:7px;position:relative;border-radius:50%;background:rgba(201,168,76,.95)}
     .compare-scene-meta{display:flex;align-items:center;justify-content:space-between;gap:.45rem;padding:0 .1rem .1rem}
-    .compare-scene-name{font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-    .compare-scene-camera{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+    .compare-scene-name{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    .compare-scene-camera{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
     .compare-thumb-tag{display:none}
 
     @media(max-width:1100px){
       .compare-main-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem;}
+      .compare-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;}
     }
     @media(max-width:760px){
       .compare-main-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;}
       .compare-scene-slider{min-height:160px;aspect-ratio:1.42;}
-      .compare-scene-name{font-size:.45rem;letter-spacing:.1em}
-      .compare-scene-camera{font-size:.48rem;letter-spacing:.08em}
+      .compare-scene-name{font-size:.52rem;letter-spacing:.08em}
+      .compare-scene-camera{font-size:.54rem;letter-spacing:.08em}
       .compare-feature-slider[data-scene="Scene 01"],.compare-scene-slider[data-scene="Scene 03"],.compare-scene-slider[data-scene="Scene 05"]{aspect-ratio:1.38}
+      .compare-card-name{font-size:.52rem;letter-spacing:.1em}
+      .compare-gallery .compare-card-name{font-size:.5rem;letter-spacing:.08em}
     }
     @media(max-width:520px){
       .compare-main-grid{grid-template-columns:1fr;gap:.8rem;}
+      .compare-shell{max-width:100%;width:100%}
+      .compare-card{padding:.5rem;gap:.45rem}
+      .compare-shell > .compare-card{padding:.4rem;gap:.35rem;max-width:720px}
+      .compare-shell > .compare-card .compare-slider{aspect-ratio:1.6;min-height:180px;border-radius:12px}
+      .compare-shell > .compare-card .compare-label{padding:.34rem .44rem;font-size:.42rem;letter-spacing:.12em;bottom:.45rem}
+      .compare-gallery{grid-template-columns:1fr;gap:.8rem;max-width:100%;margin:.25rem auto 0;align-items:start}
+      .compare-gallery .compare-card{padding:.55rem;gap:.45rem}
+      .compare-gallery .compare-slider{aspect-ratio:1.6;min-height:220px;border-radius:14px}
+      .compare-gallery .compare-card-name{font-size:.78rem;letter-spacing:.08em}
       .compare-feature-slider{min-height:220px;aspect-ratio:1.55;}
       .compare-feature-slider[data-scene="Scene 01"]{aspect-ratio:1.25}
       .compare-scene-slider[data-scene="Scene 03"],.compare-scene-slider[data-scene="Scene 05"]{aspect-ratio:1.2}
       .compare-scene-slider{min-height:190px;aspect-ratio:1.45;}
       .compare-scene-tile{padding:.55rem;}
-      .compare-feature-slider .compare-layer img,.compare-scene-slider .compare-layer img{object-position:center center}
+      .compare-feature-slider .compare-layer img,.compare-scene-slider .compare-layer img{object-position:center center;object-fit:contain;transform:none}
       .compare-scene-slider[data-scene="Scene 01"] .compare-before img, .compare-feature-slider[data-scene="Scene 01"] .compare-before img,
       .compare-scene-slider[data-scene="Scene 03"] .compare-before img, .compare-feature-slider[data-scene="Scene 03"] .compare-before img,
       .compare-scene-slider[data-scene="Scene 05"] .compare-before img, .compare-feature-slider[data-scene="Scene 05"] .compare-before img{
-        object-position:60% 48%;
-        transform:scale(1.2);
-      }
-      .compare-scene-slider[data-scene="Scene 03"] .compare-before img, .compare-feature-slider[data-scene="Scene 03"] .compare-before img,
-      .compare-scene-slider[data-scene="Scene 05"] .compare-before img, .compare-feature-slider[data-scene="Scene 05"] .compare-before img{
         object-position:center center;
-        transform:scale(1.12);
+        transform:none;
       }
+      .compare-scene-name{font-size:.7rem;letter-spacing:.08em}
+      .compare-scene-camera{font-size:.72rem;letter-spacing:.08em}
+      .compare-card-name{font-size:.78rem;letter-spacing:.08em}
     }
 
     /* SCOPES BANNER */
@@ -503,10 +523,15 @@
       .cta-banner-copy h2{line-height:1.08}
       .cta-banner-actions{width:100%;justify-content:flex-start;gap:.6rem}
       .cta-banner .btn,.cta-banner .contact-btn{width:100%;min-width:0;}
-      .compare-gallery{grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem;max-width:100%}
+      .compare-gallery{grid-template-columns:1fr;gap:.8rem;max-width:100%;margin:.25rem auto 0;align-items:start}
+      .compare-gallery .compare-card{padding:.55rem;gap:.45rem}
+      .compare-gallery .compare-slider{aspect-ratio:1.6;min-height:220px;border-radius:14px}
+      .compare-gallery .compare-card-name{font-size:.78rem;letter-spacing:.08em}
       .compare-thumb{aspect-ratio:1.1;border-radius:12px;min-width:0;min-height:92px}
       .compare-thumb-label{font-size:.42rem;letter-spacing:.08em;max-width:calc(100% - 14px)}
       .compare-shell{max-width:100%;width:100%}
+      .compare-shell > .compare-card .compare-slider{min-height:180px;aspect-ratio:1.7/1}
+      .compare-shell > .compare-card .compare-label{padding:.34rem .44rem;font-size:.42rem;letter-spacing:.12em;bottom:.45rem}
       .compare-slider{min-height:220px;aspect-ratio:1.6/1;width:min(100%, 760px)}
       .compare-layer img,.compare-thumb img{transform:scale(1.02)}
       .scopes-banner{max-width:100%;min-width:0}
@@ -627,6 +652,71 @@
   </div>
 </section>
 
+<section class="before-after-section" id="grading-showcase">
+  <p class="section-label">Before &amp; After</p>
+  <h2 class="section-title">Color grading comparisons</h2>
+  <p class="playground-intro">Drag the slider to compare the original shot and the final grade.</p>
+  <div class="divider"></div>
+  <div class="compare-shell">
+    <div class="compare-card">
+      <div class="compare-slider" data-compare-id="1" data-position="52" aria-label="Featured before and after grading comparison slot 1">
+        <div class="compare-layer compare-before"><img src="slider/2.2.1_2.2_1.2.1.jpg" alt="Log image 1.2.1"></div>
+        <div class="compare-layer compare-after"><img src="slider/Still 2026-01-19 193613_1.193.1.jpg" alt="Final image 1.193.1"></div>
+        <div class="compare-label compare-label-before">Log</div>
+        <div class="compare-label compare-label-after">Final</div>
+        <div class="compare-handle" aria-hidden="true"><div class="compare-handle-core"><i></i></div></div>
+      </div>
+      <div class="compare-card-name">Sony Venice</div>
+    </div>
+
+    <div class="compare-gallery" aria-label="Color grading comparison choices">
+      <div class="compare-card">
+        <div class="compare-slider" data-compare-id="2" data-position="44" aria-label="Before and after grading comparison slot 2">
+          <div class="compare-layer compare-before"><img src="slider/2.2.1_2.2_1.1.1.jpg" alt="Log image 2.2.1_2.2_1.1.1"></div>
+          <div class="compare-layer compare-after"><img src="slider/71.jpg" alt="Final image 71"></div>
+          <div class="compare-label compare-label-before">Log</div>
+          <div class="compare-label compare-label-after">Final</div>
+          <div class="compare-handle" aria-hidden="true"><div class="compare-handle-core"><i></i></div></div>
+        </div>
+        <div class="compare-card-name">Sony Venice</div>
+      </div>
+
+      <div class="compare-card">
+        <div class="compare-slider" data-compare-id="3" data-position="58" aria-label="Before and after grading comparison slot 3">
+          <div class="compare-layer compare-before"><img src="slider/2.2.1_2.2_1.4.1.jpg" alt="Raw image 2.2.1_2.2_1.4.1"></div>
+          <div class="compare-layer compare-after"><img src="slider/Still 2026-05-14 161708_1.17.1.jpg" alt="Final image 1.17.1"></div>
+          <div class="compare-label compare-label-before">Raw</div>
+          <div class="compare-label compare-label-after">Final</div>
+          <div class="compare-handle" aria-hidden="true"><div class="compare-handle-core"><i></i></div></div>
+        </div>
+        <div class="compare-card-name">ARRI</div>
+      </div>
+
+      <div class="compare-card">
+        <div class="compare-slider" data-compare-id="4" data-position="47" aria-label="Before and after grading comparison slot 4">
+          <div class="compare-layer compare-before"><img src="slider/2.2.1_2.2_1.5.1.jpg" alt="Log image 2.2.1_2.2_1.5.1"></div>
+          <div class="compare-layer compare-after"><img src="slider/Still 2026-10-05 140954_1.112.1.jpg" alt="Final image 1.112.1"></div>
+          <div class="compare-label compare-label-before">Log</div>
+          <div class="compare-label compare-label-after">Final</div>
+          <div class="compare-handle" aria-hidden="true"><div class="compare-handle-core"><i></i></div></div>
+        </div>
+        <div class="compare-card-name">Panasonic Lumix</div>
+      </div>
+
+      <div class="compare-card">
+        <div class="compare-slider" data-compare-id="5" data-position="63" aria-label="Before and after grading comparison slot 5">
+          <div class="compare-layer compare-before"><img src="slider/2.2.1_2.2_1.3.1.jpg" alt="Log image 2.2.1_2.2_1.3.1"></div>
+          <div class="compare-layer compare-after"><img src="slider/2.2.1_2.2.1.jpg" alt="Final image 2.2.1_2.2.1"></div>
+          <div class="compare-label compare-label-before">Log</div>
+          <div class="compare-label compare-label-after">Final</div>
+          <div class="compare-handle" aria-hidden="true"><div class="compare-handle-core"><i></i></div></div>
+        </div>
+        <div class="compare-card-name">Sony FX6</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- PLAYGROUND -->
 <section class="playground-section" id="playground">
   <p class="section-label">Interactive</p>
@@ -697,8 +787,6 @@
       <div class="scope-caption">Live scope • feel the grade</div>
     </div>
   </div>
-</section>
-
 <!-- SERVICES -->
 <section id="services">
   <p class="section-label">What We Do</p>
@@ -1640,6 +1728,93 @@
 
     filterProjects('all');
 
+    function setupCompareSlider(slider) {
+      const position = clamp(Number(slider.dataset.position || 50), 0, 100);
+      let currentPosition = position;
+      let isDragging = false;
+      let activePointerId = null;
+      const handle = slider.querySelector('.compare-handle');
+
+      const applyPosition = (value) => {
+        const nextValue = clamp(value, 0, 100);
+        currentPosition = nextValue;
+        slider.dataset.position = String(nextValue);
+        slider.style.setProperty('--position', `${nextValue}%`);
+      };
+
+      const hitTestHandle = (clientX) => {
+        const rect = slider.getBoundingClientRect();
+        const handleCenter = rect.left + (currentPosition / 100) * rect.width;
+        return Math.abs(clientX - handleCenter) <= 64;
+      };
+
+      const updateFromClientX = (clientX) => {
+        const rect = slider.getBoundingClientRect();
+        const next = ((clientX - rect.left) / rect.width) * 100;
+        applyPosition(next);
+      };
+
+      const startDragging = (event) => {
+        if (event.pointerType === 'mouse' && event.button !== 0) return;
+        if (event.target && event.target.closest('.compare-label')) return;
+
+        const fromHandle = event.target && event.target.closest('.compare-handle');
+        if (!fromHandle && !hitTestHandle(event.clientX)) return;
+
+        isDragging = true;
+        activePointerId = event.pointerId;
+        try {
+          slider.setPointerCapture?.(event.pointerId);
+        } catch (error) {
+          // Some synthetic or edge-case pointer events do not establish capture.
+        }
+        slider.style.cursor = 'grabbing';
+        updateFromClientX(event.clientX);
+      };
+
+      const stopDragging = (event) => {
+        if (event && event.pointerId !== undefined && activePointerId !== null && event.pointerId !== activePointerId) {
+          return;
+        }
+
+        if (isDragging && activePointerId !== null) {
+          try {
+            slider.releasePointerCapture?.(activePointerId);
+          } catch (error) {
+            // Ignore pointer release errors when capture is already released.
+          }
+        }
+
+        isDragging = false;
+        activePointerId = null;
+        slider.style.cursor = 'ew-resize';
+      };
+
+      applyPosition(currentPosition);
+
+      if (handle) {
+        handle.addEventListener('pointerdown', startDragging);
+      }
+
+      slider.addEventListener('pointerdown', (event) => {
+        if (event.target && event.target.closest('.compare-label')) return;
+        startDragging(event);
+      });
+
+      slider.addEventListener('pointermove', (event) => {
+        if (!isDragging || activePointerId !== null && event.pointerId !== activePointerId) {
+          return;
+        }
+        updateFromClientX(event.clientX);
+      });
+
+      slider.addEventListener('pointerup', stopDragging);
+      slider.addEventListener('pointercancel', stopDragging);
+      document.addEventListener('pointerup', stopDragging);
+      document.addEventListener('pointercancel', stopDragging);
+    }
+
+    document.querySelectorAll('.compare-slider').forEach((slider) => setupCompareSlider(slider));
 
     const reviewCards = Array.from(document.querySelectorAll('#reviews .review-card'));
     const prevButton = document.querySelector('#reviews .review-btn.prev');
