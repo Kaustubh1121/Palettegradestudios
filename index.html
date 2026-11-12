@@ -198,8 +198,8 @@
     .compare-shell{display:grid;gap:1rem;max-width:1200px;margin:0 auto}
     .compare-slider{position:relative;aspect-ratio:2048 / 858;max-height:858px;min-height:360px;width:min(100%, 1280px);margin:0 auto;border-radius:26px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0d;box-shadow:0 26px 54px rgba(0,0,0,.28);--position:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;isolation:isolate}
     .compare-slider::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.12));pointer-events:none;z-index:3}
-    .compare-layer{position:absolute;inset:0;transition:none;z-index:1}
-    .compare-layer img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+    .compare-layer{position:absolute;inset:0;transition:none;z-index:1;overflow:hidden;background:#0b0b0b}
+    .compare-layer img{display:block;width:100%;height:100%;object-fit:cover;object-position:center center;transform:scale(1.04)}
     .compare-before{z-index:1;opacity:1}
     .compare-before img{filter:saturate(.72) brightness(1.04) contrast(.76) hue-rotate(-1deg) sepia(.01)}
     .compare-after{z-index:2;clip-path:inset(0 0 0 var(--position));opacity:1}
@@ -443,7 +443,8 @@
       .compare-thumb{aspect-ratio:1.15;border-radius:14px;min-width:0}
       .compare-thumb-label{font-size:.48rem;letter-spacing:.08em;max-width:calc(100% - 18px)}
       .compare-shell{max-width:100%;width:100%}
-      .compare-slider{min-height:220px}
+      .compare-slider{min-height:220px;aspect-ratio:1.6/1}
+      .compare-layer img,.compare-thumb img{transform:scale(1.02)}
       .scopes-banner{max-width:100%;min-width:0}
       .scopes-banner svg{display:block;width:100%;max-width:100%;height:auto;overflow:hidden}
       .compare-meta{padding:.4rem .8rem}
@@ -1594,7 +1595,16 @@
     const compareAfterImage = gradeCompareSlider?.querySelector('.compare-after img');
     const compareCameraLabel = document.querySelector('.compare-camera');
     const compareThumbs = Array.from(document.querySelectorAll('.compare-thumb'));
+    const compareImageCache = new Set();
     let compareDragging = false;
+
+    function preloadCompareImage(src) {
+      if (!src || compareImageCache.has(src)) return;
+      compareImageCache.add(src);
+      const img = new Image();
+      img.decoding = 'async';
+      img.src = src;
+    }
 
     function updateGradeCompare(value) {
       const position = clamp(Number(value) || 50, 0, 100);
@@ -1608,6 +1618,9 @@
       const after = button.dataset.after || compareAfterImage.src;
       const scene = button.dataset.scene || 'Scene';
       const camera = button.dataset.camera || 'Sony Venice';
+
+      preloadCompareImage(before);
+      preloadCompareImage(after);
 
       compareBeforeImage.src = before;
       compareBeforeImage.alt = `Before color grade ${scene}`;
@@ -1653,6 +1666,10 @@
     }
 
     compareThumbs.forEach((thumb) => {
+      const before = thumb.dataset.before;
+      const after = thumb.dataset.after;
+      preloadCompareImage(before);
+      preloadCompareImage(after);
       thumb.addEventListener('click', () => setCompareScene(thumb));
     });
 
