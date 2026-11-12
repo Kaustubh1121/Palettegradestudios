@@ -239,6 +239,12 @@
     .compare-scene-slider{position:relative;aspect-ratio:1.35;min-height:175px;border-radius:14px;overflow:hidden;background:#0d0d0d;border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 20px rgba(0,0,0,.18);--position:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;isolation:isolate;width:100%}
     .compare-scene-slider .compare-layer,.compare-feature-slider .compare-layer{position:absolute;inset:0;overflow:hidden;background:#0b0b0b}
     .compare-scene-slider .compare-layer img,.compare-feature-slider .compare-layer img{display:block;width:100%;height:100%;object-fit:cover;object-position:center center;transform:scale(1.04)}
+    .compare-scene-slider[data-scene="Scene 01"] .compare-before img, .compare-feature-slider[data-scene="Scene 01"] .compare-before img,
+    .compare-scene-slider[data-scene="Scene 03"] .compare-before img, .compare-feature-slider[data-scene="Scene 03"] .compare-before img,
+    .compare-scene-slider[data-scene="Scene 05"] .compare-before img, .compare-feature-slider[data-scene="Scene 05"] .compare-before img{
+      object-position:62% 48%;
+      transform:scale(1.18);
+    }
     .compare-scene-slider .compare-before,.compare-feature-slider .compare-before{opacity:1}
     .compare-scene-slider .compare-before img,.compare-feature-slider .compare-before img{filter:brightness(1.28) saturate(.78) contrast(.82) hue-rotate(-2deg) sepia(.04)}
     .compare-scene-slider .compare-after,.compare-feature-slider .compare-after{clip-path:inset(0 0 0 var(--position));opacity:1}
@@ -276,6 +282,17 @@
       .compare-scene-slider{min-height:190px;aspect-ratio:1.45;}
       .compare-scene-tile{padding:.55rem;}
       .compare-feature-slider .compare-layer img,.compare-scene-slider .compare-layer img{object-position:center center}
+      .compare-scene-slider[data-scene="Scene 01"] .compare-before img, .compare-feature-slider[data-scene="Scene 01"] .compare-before img,
+      .compare-scene-slider[data-scene="Scene 03"] .compare-before img, .compare-feature-slider[data-scene="Scene 03"] .compare-before img,
+      .compare-scene-slider[data-scene="Scene 05"] .compare-before img, .compare-feature-slider[data-scene="Scene 05"] .compare-before img{
+        object-position:60% 48%;
+        transform:scale(1.2);
+      }
+      .compare-scene-slider[data-scene="Scene 03"] .compare-before img, .compare-feature-slider[data-scene="Scene 03"] .compare-before img,
+      .compare-scene-slider[data-scene="Scene 05"] .compare-before img, .compare-feature-slider[data-scene="Scene 05"] .compare-before img{
+        object-position:center center;
+        transform:scale(1.12);
+      }
     }
 
     /* SCOPES BANNER */
@@ -679,15 +696,6 @@
       <canvas id="scopeCanvas"></canvas>
       <div class="scope-caption">Live scope • feel the grade</div>
     </div>
-  </div>
-</section>
-
-<section class="before-after-section" aria-label="Before and after grade comparison">
-  <p class="section-label">Before / After</p>
-  <h2 class="section-title">Grade comparison</h2>
-  <div class="divider"></div>
-  <div class="compare-shell">
-    <div class="compare-scene-grid" aria-label="Five before and after grade references"></div>
   </div>
 </section>
 
@@ -1632,269 +1640,6 @@
 
     filterProjects('all');
 
-    const gradeCompareSlider = document.getElementById('gradeCompareSlider');
-    const compareBeforeImage = gradeCompareSlider?.querySelector('.compare-before img');
-    const compareAfterImage = gradeCompareSlider?.querySelector('.compare-after img');
-    const compareCameraLabel = document.querySelector('.compare-camera');
-    const compareSceneGrid = document.querySelector('.compare-scene-grid');
-    const compareScenes = [
-      { before: 'slider/Still 2026-11-12 174233_1.2.1.png', after: 'slider/Still 2026-01-19 193613_1.193.1.jpg', scene: 'Scene 01', camera: 'Sony Venice' },
-      { before: 'slider/71.jpg', after: 'slider/71.jpg', scene: 'Scene 02', camera: 'Sony Venice' },
-      { before: 'slider/Still 2026-05-14 161708_1.17.1.jpg', after: 'slider/Still 2026-05-14 161708_1.17.1.jpg', scene: 'Scene 03', camera: 'Arri' },
-      { before: 'slider/Still 2026-10-05 140954_1.112.1.jpg', after: 'slider/Still 2026-10-05 140954_1.112.1.jpg', scene: 'Scene 04', camera: 'Panasonic Lumix' },
-      { before: 'slider/2.2.1_2.2.1.png', after: 'slider/2.2.1_2.2.1.png', scene: 'Scene 05', camera: 'Sony FX6' }
-    ];
-    let compareThumbs = [];
-    const compareImageCache = new Set();
-    const compareSection = document.querySelector('.before-after-section');
-    let compareDragging = false;
-
-    function renderCompareMiniCards() {
-      if (!compareSceneGrid) return;
-
-      const [feature, ...secondary] = compareScenes;
-      const featureMarkup = feature ? `
-        <div class="compare-feature">
-          <div class="compare-feature-slider" data-before="${feature.before}" data-after="${feature.after}" data-scene="${feature.scene}" data-camera="${feature.camera}" aria-label="${feature.scene} before and after comparison" style="--position:50%">
-            <div class="compare-layer compare-before"><img src="${feature.before}" alt="Before color grade ${feature.scene}" loading="eager" decoding="async" fetchpriority="high"></div>
-            <div class="compare-layer compare-after"><img src="${feature.after}" alt="After color grade ${feature.scene}" loading="eager" decoding="async" fetchpriority="high"></div>
-            <div class="compare-label compare-label-before">Log</div>
-            <div class="compare-label compare-label-after">Final</div>
-            <div class="compare-handle"><span class="compare-handle-core" aria-hidden="true"><i></i><em>Drag</em></span></div>
-          </div>
-          <div class="compare-scene-meta">
-            <span class="compare-scene-name">${feature.scene}</span>
-            <span class="compare-scene-camera">${feature.camera}</span>
-          </div>
-        </div>
-      ` : '';
-
-      const secondaryMarkup = secondary.length ? `
-        <div class="compare-main-grid">
-          ${secondary.map((scene) => {
-            const { before, after, camera } = scene;
-            return `
-              <div class="compare-scene-tile">
-                <div class="compare-scene-slider" data-before="${before}" data-after="${after}" data-scene="${scene.scene}" data-camera="${camera}" aria-label="${scene.scene} before and after comparison" style="--position:50%">
-                  <div class="compare-layer compare-before"><img src="${before}" alt="Before color grade ${scene.scene}" loading="lazy" decoding="async"></div>
-                  <div class="compare-layer compare-after"><img src="${after}" alt="After color grade ${scene.scene}" loading="lazy" decoding="async"></div>
-                  <div class="compare-label compare-label-before">Log</div>
-                  <div class="compare-label compare-label-after">Final</div>
-                  <div class="compare-handle"><span class="compare-handle-core" aria-hidden="true"><i></i><em>Drag</em></span></div>
-                </div>
-                <div class="compare-scene-meta">
-                  <span class="compare-scene-name">${scene.scene}</span>
-                  <span class="compare-scene-camera">${camera}</span>
-                </div>
-              </div>
-            `;
-          }).join('')}
-        </div>
-      ` : '';
-
-      compareSceneGrid.innerHTML = `${featureMarkup}${secondaryMarkup}`;
-
-      compareThumbs = Array.from(document.querySelectorAll('.compare-feature-slider, .compare-scene-slider'));
-      compareThumbs.forEach((slider) => {
-        const beforeImage = slider.querySelector('.compare-before img');
-        const afterImage = slider.querySelector('.compare-after img');
-        let sliderIsDragging = false;
-
-        const setFromPointerX = (clientX) => {
-          const rect = slider.getBoundingClientRect();
-          const relative = clamp(((clientX - rect.left) / rect.width) * 100, 0, 100);
-          slider.style.setProperty('--position', `${relative}%`);
-        };
-
-        slider.addEventListener('pointerdown', (event) => {
-          sliderIsDragging = true;
-          slider.setPointerCapture?.(event.pointerId);
-          setFromPointerX(event.clientX);
-          event.preventDefault();
-        });
-
-        slider.addEventListener('pointermove', (event) => {
-          if (!sliderIsDragging) return;
-          setFromPointerX(event.clientX);
-        });
-
-        slider.addEventListener('pointerup', () => {
-          sliderIsDragging = false;
-        });
-
-        slider.addEventListener('pointercancel', () => {
-          sliderIsDragging = false;
-        });
-
-        slider.addEventListener('pointerleave', () => {
-          sliderIsDragging = false;
-        });
-
-        if (beforeImage) {
-          beforeImage.loading = slider === compareThumbs[0] ? 'eager' : 'lazy';
-          beforeImage.decoding = 'async';
-        }
-        if (afterImage) {
-          afterImage.loading = slider === compareThumbs[0] ? 'eager' : 'lazy';
-          afterImage.decoding = 'async';
-        }
-      });
-    }
-
-    function preloadCompareImage(src, priority = 'high') {
-      if (!src || compareImageCache.has(src)) return;
-      compareImageCache.add(src);
-
-      const existingLink = document.querySelector(`link[data-compare-preload="${src}"]`);
-      if (!existingLink) {
-        const preloadLink = document.createElement('link');
-        preloadLink.rel = 'preload';
-        preloadLink.as = 'image';
-        preloadLink.href = src;
-        preloadLink.dataset.comparePreload = src;
-        preloadLink.fetchPriority = priority;
-        document.head.appendChild(preloadLink);
-      }
-
-      const img = new Image();
-      img.decoding = 'async';
-      img.loading = 'eager';
-      img.fetchPriority = priority;
-      img.src = src;
-      img.onerror = () => {
-        compareImageCache.delete(src);
-      };
-    }
-
-    function preloadCompareSectionImages() {
-      if (!compareScenes.length) return;
-      compareScenes.forEach((scene) => {
-        if (scene.before) preloadCompareImage(scene.before, 'high');
-        if (scene.after) preloadCompareImage(scene.after, 'high');
-      });
-    }
-
-    function updateGradeCompare(value) {
-      const position = clamp(Number(value) || 50, 0, 100);
-      if (!gradeCompareSlider) return;
-      gradeCompareSlider.style.setProperty('--position', `${position}%`);
-    }
-
-    function setCompareScene(button) {
-      if (!button || !compareBeforeImage || !compareAfterImage) return;
-      const before = button.dataset.before || compareBeforeImage.src;
-      const after = button.dataset.after || compareAfterImage.src;
-      const scene = button.dataset.scene || 'Scene';
-      const camera = button.dataset.camera || 'Sony Venice';
-
-      if (!compareBeforeImage.src || compareBeforeImage.src !== new URL(before, window.location.href).href) {
-        compareBeforeImage.src = before;
-      }
-      if (!compareAfterImage.src || compareAfterImage.src !== new URL(after, window.location.href).href) {
-        compareAfterImage.src = after;
-      }
-
-      compareBeforeImage.loading = 'lazy';
-      compareBeforeImage.decoding = 'async';
-      compareBeforeImage.alt = `Before color grade ${scene}`;
-      compareAfterImage.loading = 'lazy';
-      compareAfterImage.decoding = 'async';
-      compareAfterImage.alt = `After color grade ${scene}`;
-      if (compareCameraLabel) compareCameraLabel.textContent = `Camera • ${camera}`;
-
-      compareThumbs.forEach((thumb) => thumb.classList.toggle('is-active', thumb === button));
-    }
-
-    function loadInitialCompareScene() {
-      if (!compareThumbs.length || !compareSection || compareSection.dataset.compareLoaded === 'true') return;
-      compareSection.dataset.compareLoaded = 'true';
-
-      const initialThumb = compareThumbs[0];
-      if (!initialThumb) return;
-
-      const runLoad = () => {
-        const before = initialThumb.dataset.before;
-        const after = initialThumb.dataset.after;
-        if (!before || !after) return;
-
-        const imgBefore = new Image();
-        imgBefore.loading = 'eager';
-        imgBefore.decoding = 'async';
-        imgBefore.src = before;
-
-        const imgAfter = new Image();
-        imgAfter.loading = 'eager';
-        imgAfter.decoding = 'async';
-        imgAfter.src = after;
-
-        compareBeforeImage.src = before;
-        compareAfterImage.src = after;
-        compareBeforeImage.alt = `Before color grade ${initialThumb.dataset.scene || 'Scene'}`;
-        compareAfterImage.alt = `After color grade ${initialThumb.dataset.scene || 'Scene'}`;
-        if (compareCameraLabel) compareCameraLabel.textContent = `Camera • ${initialThumb.dataset.camera || 'Sony Venice'}`;
-        compareThumbs.forEach((thumb) => thumb.classList.toggle('is-active', thumb === initialThumb));
-      };
-
-      if (document.readyState === 'complete') {
-        requestAnimationFrame(runLoad);
-        return;
-      }
-
-      window.addEventListener('load', runLoad, { once: true });
-    }
-
-    function loadCompareOnDemand(button) {
-      const before = button.dataset.before;
-      const after = button.dataset.after;
-      if (!before || !after) return;
-      const pending = [before, after].filter(Boolean);
-      pending.forEach((src) => preloadCompareImage(src));
-      setCompareScene(button);
-    }
-
-    if (gradeCompareSlider) {
-      const setFromPointerX = (clientX) => {
-        const rect = gradeCompareSlider.getBoundingClientRect();
-        const relative = clamp(((clientX - rect.left) / rect.width) * 100, 0, 100);
-        updateGradeCompare(relative);
-      };
-
-      gradeCompareSlider.addEventListener('pointerdown', (event) => {
-        compareDragging = true;
-        gradeCompareSlider.setPointerCapture?.(event.pointerId);
-        setFromPointerX(event.clientX);
-        event.preventDefault();
-      });
-
-      gradeCompareSlider.addEventListener('pointermove', (event) => {
-        if (!compareDragging) return;
-        setFromPointerX(event.clientX);
-      });
-
-      gradeCompareSlider.addEventListener('pointerup', () => {
-        compareDragging = false;
-      });
-
-      gradeCompareSlider.addEventListener('pointercancel', () => {
-        compareDragging = false;
-      });
-
-      window.addEventListener('pointerup', () => {
-        compareDragging = false;
-      });
-
-      updateGradeCompare(50);
-    }
-
-    preloadCompareSectionImages();
-    renderCompareMiniCards();
-
-    if (compareThumbs.length) {
-      const initialThumb = compareThumbs[0];
-      if (initialThumb) {
-        setCompareScene(initialThumb);
-      }
-    }
 
     const reviewCards = Array.from(document.querySelectorAll('#reviews .review-card'));
     const prevButton = document.querySelector('#reviews .review-btn.prev');
