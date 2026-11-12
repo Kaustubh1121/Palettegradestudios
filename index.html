@@ -194,6 +194,43 @@
     .cta-banner-actions{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;justify-content:flex-end}
     .cta-banner .btn,.cta-banner .contact-btn{min-width:170px;justify-content:center}
 
+    .before-after-section{padding:5rem 5vw;background:linear-gradient(180deg,rgba(7,7,7,0.96),rgba(17,17,17,0.98));border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
+    .compare-shell{display:grid;gap:1rem;max-width:1200px;margin:0 auto}
+    .compare-slider{position:relative;aspect-ratio:2048 / 858;max-height:858px;min-height:360px;width:min(100%, 1280px);margin:0 auto;border-radius:26px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0d;box-shadow:0 26px 54px rgba(0,0,0,.28);--position:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;isolation:isolate}
+    .compare-slider::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.12));pointer-events:none;z-index:3}
+    .compare-layer{position:absolute;inset:0;transition:none;z-index:1}
+    .compare-layer img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+    .compare-before{z-index:1;opacity:1}
+    .compare-before img{filter:saturate(.72) brightness(1.04) contrast(.76) hue-rotate(-1deg) sepia(.01)}
+    .compare-after{z-index:2;clip-path:inset(0 0 0 var(--position));opacity:1}
+    .compare-after img{filter:saturate(1.26) contrast(1.12) brightness(1.08) hue-rotate(4deg)}
+    .compare-label{position:absolute;bottom:1rem;z-index:6;display:flex;align-items:center;justify-content:center;padding:.58rem .9rem;border-radius:10px;text-transform:uppercase;letter-spacing:.18em;line-height:1;color:#f8f3ea;background:rgba(9,9,9,.52);border:1px solid rgba(255,255,255,.12);font-size:.66rem;font-weight:600;text-shadow:0 2px 8px rgba(0,0,0,.5);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);box-shadow:0 8px 18px rgba(0,0,0,.12)}
+    .compare-label-before{left:1rem;top:auto;background:rgba(9,9,9,.55);border-color:rgba(255,255,255,.12)}
+    .compare-label-after{right:1rem;top:auto;bottom:1rem;background:rgba(9,9,9,.55);border-color:rgba(255,255,255,.12);color:#f8f3ea;box-shadow:0 8px 18px rgba(0,0,0,.12)}
+    .compare-handle{position:absolute;left:var(--position);top:0;bottom:0;width:0;z-index:7;pointer-events:none}
+    .compare-handle::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.85),rgba(255,255,255,.12));box-shadow:0 0 12px rgba(201,168,76,.34)}
+    .compare-handle-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:58px;height:58px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(13,13,13,.72);box-shadow:0 12px 26px rgba(0,0,0,.28),0 0 0 1px rgba(201,168,76,.08)}
+    .compare-handle-core::before,.compare-handle-core::after{content:"";position:absolute;top:50%;width:2px;height:16px;background:rgba(201,168,76,.95);transform:translateY(-50%);border-radius:999px}
+    .compare-handle-core::before{left:18px;box-shadow:0 0 10px rgba(201,168,76,.35)}
+    .compare-handle-core::after{right:18px;box-shadow:0 0 10px rgba(201,168,76,.35)}
+    .compare-handle-core i{display:block;width:10px;height:10px;position:relative;border-radius:50%;background:rgba(201,168,76,.95);box-shadow:0 0 0 5px rgba(201,168,76,.12)}
+    .compare-handle-core em{display:none}
+    .compare-meta{position:relative;display:flex;justify-content:center;align-items:center;margin-top:.5rem;padding:0;background:transparent;border:none;box-shadow:none;overflow:visible;transition:none}
+    .compare-meta::before{content:none}
+    .compare-meta:hover{border:none;box-shadow:none;transform:none}
+    .compare-camera{position:relative;z-index:1;display:inline-block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#f3eee4;padding:.18rem .42rem;border-radius:999px;background:rgba(12,12,12,.38);border:1px solid rgba(201,168,76,.18);min-height:22px;display:inline-flex;align-items:center;justify-content:center;transition:text-shadow .2s ease,filter .2s ease,box-shadow .2s ease,border-color .2s ease}
+    .compare-meta:hover .compare-camera{border-color:rgba(201,168,76,.32);box-shadow:0 0 0 1px rgba(201,168,76,.08),0 0 16px rgba(201,168,76,.2);text-shadow:0 0 14px rgba(201,168,76,.28);filter:brightness(1.08)}
+    .compare-gallery{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.7rem;margin:1.1rem auto 0;max-width:1200px}
+    .compare-thumb{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0d;box-shadow:0 16px 30px rgba(0,0,0,.18);border-radius:16px;padding:0;cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease,opacity .2s ease,text-shadow .2s ease;text-align:left;display:block;aspect-ratio:1.2;}
+    .compare-thumb::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(201,168,76,.08),transparent 38%,transparent 68%,rgba(201,168,76,.08));pointer-events:none;z-index:1}
+    .compare-thumb:hover{transform:translateY(-2px);border-color:rgba(201,168,76,.32);box-shadow:0 0 0 1px rgba(201,168,76,.12),0 18px 34px rgba(0,0,0,.2),0 0 18px rgba(201,168,76,.14)}
+    .compare-thumb.is-active{border-color:rgba(201,168,76,.52);box-shadow:0 0 0 1px rgba(201,168,76,.26),0 18px 34px rgba(0,0,0,.22)}
+    .compare-thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(1.26) contrast(1.12) brightness(1.08) hue-rotate(4deg)}
+    .compare-thumb:nth-child(3) img,.compare-thumb:nth-child(5) img{width:112%;height:112%;margin-left:-6%;margin-top:-6%;object-fit:cover;object-position:center;transform:scale(1.12);transform-origin:center}
+    .compare-thumb-label,.compare-thumb-tag{position:absolute;left:10px;z-index:2;padding:.28rem .55rem;border-radius:999px;background:rgba(10,10,10,.58);border:1px solid rgba(255,255,255,.08);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:#f7f1d8;line-height:1.2}
+    .compare-thumb-label{top:10px;max-width:calc(100% - 20px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .compare-thumb-tag{display:none}
+
     /* SCOPES BANNER */
     .scopes-banner{width:100%;overflow:hidden;margin-bottom:2.5rem}
     .scopes-banner svg{width:100%;display:block}
@@ -371,6 +408,9 @@
       .btn{align-self:center;max-width:none}
       .playground-frame{aspect-ratio:4/3;min-height:240px;}
     }
+    @media(max-width:700px){
+      .cursor-glow{display:none}
+    }
     @media(max-width:600px){
       html{scroll-padding-top:84px}
       section[id]{scroll-margin-top:84px}
@@ -399,6 +439,15 @@
       .cta-banner-copy h2{line-height:1.08}
       .cta-banner-actions{width:100%;justify-content:flex-start;gap:.6rem}
       .cta-banner .btn,.cta-banner .contact-btn{width:100%;min-width:0;}
+      .compare-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}
+      .compare-thumb{aspect-ratio:1.15;border-radius:14px;min-width:0}
+      .compare-thumb-label{font-size:.48rem;letter-spacing:.08em;max-width:calc(100% - 18px)}
+      .compare-shell{max-width:100%;width:100%}
+      .compare-slider{min-height:220px}
+      .scopes-banner{max-width:100%;min-width:0}
+      .scopes-banner svg{display:block;width:100%;max-width:100%;height:auto;overflow:hidden}
+      .compare-meta{padding:.4rem .8rem}
+      .compare-meta::before{inset:auto 10% -10px 10%;height:14px}
       .project-tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;gap:.45rem;padding:0 .15rem .25rem;margin-bottom:1rem;-ms-overflow-style:none;scrollbar-width:none;background:rgba(255,255,255,.02);border-radius:18px;border:1px solid rgba(255,255,255,.05)}
       .project-tabs::-webkit-scrollbar{display:none}
       .project-tab{flex:0 0 auto;padding:.62rem .8rem;font-size:.58rem;letter-spacing:.12em;border-radius:999px;background:rgba(255,255,255,.03)}
@@ -463,7 +512,6 @@
       .work-title{font-size:.96rem}
       .service-name{font-size:1.15rem}
       .service-desc{font-size:.88rem}
-      .cursor-glow{display:none}
     }
   </style>
 </head>
@@ -582,6 +630,46 @@
     <div class="playground-scope">
       <canvas id="scopeCanvas"></canvas>
       <div class="scope-caption">Live scope • feel the grade</div>
+    </div>
+  </div>
+</section>
+
+<section class="before-after-section" aria-label="Before and after grade comparison">
+  <p class="section-label">Before / After</p>
+  <h2 class="section-title">Grade comparison</h2>
+  <div class="divider"></div>
+  <div class="compare-shell">
+    <div class="compare-slider" id="gradeCompareSlider" aria-label="Before and after comparison slider" aria-live="polite">
+      <div class="compare-layer compare-before"><img src="slider/Still 2026-11-12 174233_1.2.1.png" alt="Before color grade" /></div>
+      <div class="compare-layer compare-after"><img src="slider/Still 2026-01-19 193613_1.193.1.jpg" alt="After color grade" /></div>
+      <div class="compare-label compare-label-before">Log</div>
+      <div class="compare-label compare-label-after">Final</div>
+      <div class="compare-handle"><span class="compare-handle-core" aria-hidden="true"><i></i><em>Drag</em></span></div>
+    </div>
+    <div class="compare-meta">
+      <span class="compare-camera">Camera • Sony Venice</span>
+    </div>
+    <div class="compare-gallery" aria-label="Select a before and after grade reference">
+      <button class="compare-thumb compare-thumb-final is-active" type="button" data-before="slider/Still 2026-11-12 174233_1.2.1.png" data-after="slider/Still 2026-01-19 193613_1.193.1.jpg" data-scene="Scene 01" data-camera="Sony Venice" aria-label="Load scene 01 comparison">
+        <img src="slider/Still 2026-01-19 193613_1.193.1.jpg" alt="Final reference scene 01" />
+        <span class="compare-thumb-label">Sony Venice</span>
+      </button>
+      <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/Still 2026-11-12 174233_1.1.1.png" data-after="slider/71.jpg" data-scene="Scene 02" data-camera="Sony Venice" aria-label="Load scene 02 comparison">
+        <img src="slider/71.jpg" alt="Final reference scene 02" />
+        <span class="compare-thumb-label">Sony Venice</span>
+      </button>
+      <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/Still 2026-05-14 161708_1.17.1.jpg" data-after="slider/Still 2026-05-14 161708_1.17.1.jpg" data-scene="Scene 03" data-camera="Arri" aria-label="Load scene 03 comparison">
+        <img src="slider/Still 2026-05-14 161708_1.17.1.jpg" alt="Final reference scene 03" />
+        <span class="compare-thumb-label">Arri</span>
+      </button>
+      <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/Still 2026-11-12 174233_1.5.1.png" data-after="slider/Still 2026-10-05 140954_1.112.1.jpg" data-scene="Scene 04" data-camera="Panasonic Lumix" aria-label="Load scene 04 comparison">
+        <img src="slider/Still 2026-10-05 140954_1.112.1.jpg" alt="Final reference scene 04" />
+        <span class="compare-thumb-label">Panasonic Lumix</span>
+      </button>
+      <button class="compare-thumb compare-thumb-final" type="button" data-before="slider/2.2.1_2.2.1.png" data-after="slider/2.2.1_2.2.1.png" data-scene="Scene 05" data-camera="Sony FX6" aria-label="Load scene 05 comparison">
+        <img src="slider/2.2.1_2.2.1.png" alt="Final reference scene 05" />
+        <span class="compare-thumb-label">Sony FX6</span>
+      </button>
     </div>
   </div>
 </section>
@@ -1500,6 +1588,77 @@
     });
 
     filterProjects('all');
+
+    const gradeCompareSlider = document.getElementById('gradeCompareSlider');
+    const compareBeforeImage = gradeCompareSlider?.querySelector('.compare-before img');
+    const compareAfterImage = gradeCompareSlider?.querySelector('.compare-after img');
+    const compareCameraLabel = document.querySelector('.compare-camera');
+    const compareThumbs = Array.from(document.querySelectorAll('.compare-thumb'));
+    let compareDragging = false;
+
+    function updateGradeCompare(value) {
+      const position = clamp(Number(value) || 50, 0, 100);
+      if (!gradeCompareSlider) return;
+      gradeCompareSlider.style.setProperty('--position', `${position}%`);
+    }
+
+    function setCompareScene(button) {
+      if (!button || !compareBeforeImage || !compareAfterImage) return;
+      const before = button.dataset.before || compareBeforeImage.src;
+      const after = button.dataset.after || compareAfterImage.src;
+      const scene = button.dataset.scene || 'Scene';
+      const camera = button.dataset.camera || 'Sony Venice';
+
+      compareBeforeImage.src = before;
+      compareBeforeImage.alt = `Before color grade ${scene}`;
+      compareAfterImage.src = after;
+      compareAfterImage.alt = `After color grade ${scene}`;
+      if (compareCameraLabel) compareCameraLabel.textContent = `Camera • ${camera}`;
+
+      compareThumbs.forEach((thumb) => thumb.classList.toggle('is-active', thumb === button));
+    }
+
+    if (gradeCompareSlider) {
+      const setFromPointerX = (clientX) => {
+        const rect = gradeCompareSlider.getBoundingClientRect();
+        const relative = clamp(((clientX - rect.left) / rect.width) * 100, 0, 100);
+        updateGradeCompare(relative);
+      };
+
+      gradeCompareSlider.addEventListener('pointerdown', (event) => {
+        compareDragging = true;
+        gradeCompareSlider.setPointerCapture?.(event.pointerId);
+        setFromPointerX(event.clientX);
+        event.preventDefault();
+      });
+
+      gradeCompareSlider.addEventListener('pointermove', (event) => {
+        if (!compareDragging) return;
+        setFromPointerX(event.clientX);
+      });
+
+      gradeCompareSlider.addEventListener('pointerup', () => {
+        compareDragging = false;
+      });
+
+      gradeCompareSlider.addEventListener('pointercancel', () => {
+        compareDragging = false;
+      });
+
+      window.addEventListener('pointerup', () => {
+        compareDragging = false;
+      });
+
+      updateGradeCompare(50);
+    }
+
+    compareThumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => setCompareScene(thumb));
+    });
+
+    if (compareThumbs.length) {
+      setCompareScene(compareThumbs[0] || compareThumbs[1]);
+    }
 
     const reviewCards = Array.from(document.querySelectorAll('#reviews .review-card'));
     const prevButton = document.querySelector('#reviews .review-btn.prev');
