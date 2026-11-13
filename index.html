@@ -429,9 +429,9 @@
     /* PARTNERS */
     #partners{background:var(--black);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
     .partners-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6rem;align-items:center;justify-items:center;max-width:100%;margin:0 auto;padding:5rem;background:rgba(255,255,255,.02);border-radius:16px}
-    .partner-logo{display:flex;align-items:center;justify-content:center;padding:4rem;background:transparent;transition:transform .2s;height:280px}
-    .partner-logo:hover{transform:scale(1.05)}
-    .partner-logo img{max-width:100%;max-height:100%;object-fit:contain;opacity:.9;transition:opacity .2s}
+    .partner-logo{display:flex;align-items:center;justify-content:center;padding:2rem 1.25rem;background:transparent;transition:transform .2s;min-height:180px;max-height:220px}
+    .partner-logo:hover{transform:scale(1.03)}
+    .partner-logo img{display:block;width:min(100%,220px);max-width:220px;height:auto;max-height:180px;object-fit:contain;opacity:.9;transition:opacity .2s}
     .partner-logo:hover img{opacity:1}
 
     /* CONTACT */
@@ -624,7 +624,7 @@
     <picture>
       <source type="image/avif" srcset="PaletteGradeStudios_WhiteText.avif">
       <source type="image/webp" srcset="PaletteGradeStudios_WhiteText.webp">
-      <img class="loader-logo" width="1505" height="1159" decoding="async" src="PaletteGradeStudios_WhiteText.png" alt="PaletteGrade Studios Logo" />
+      <img class="loader-logo" width="1505" height="1159" decoding="async" loading="eager" fetchpriority="high" src="PaletteGradeStudios_WhiteText.png" alt="PaletteGrade Studios Logo" />
     </picture>
     <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
     <div class="loader-status" id="loaderStatus">Loading 0%</div>
@@ -637,7 +637,7 @@
     <picture>
       <source type="image/avif" srcset="PaletteGradeStudios_Asset.avif">
       <source type="image/webp" srcset="PaletteGradeStudios_Asset.webp">
-      <img class="nav-logo-img" width="36" height="36" decoding="async" src="PaletteGradeStudios_Asset.png" alt="PaletteGrade Studios Logo"/>
+      <img class="nav-logo-img" width="36" height="36" decoding="async" loading="eager" fetchpriority="high" src="PaletteGradeStudios_Asset.png" alt="PaletteGrade Studios Logo"/>
     </picture>
     <span class="nav-logo-text">PaletteGrade Studios</span>
   </a>
@@ -662,14 +662,14 @@
     <picture>
       <source type="image/avif" srcset="IMG-20250520-WA0020.avif">
       <source type="image/webp" srcset="IMG-20250520-WA0020.webp">
-      <img width="4032" height="2268" fetchpriority="high" decoding="async" src="IMG-20250520-WA0020.jpg" alt="PaletteGrade Studios set" />
+      <img width="4032" height="2268" fetchpriority="high" decoding="async" loading="eager" src="IMG-20250520-WA0020.jpg" alt="PaletteGrade Studios set" />
     </picture>
   </div>
   <div class="hero-content">
     <picture>
       <source type="image/avif" srcset="PaletteGradeStudios_Asset.avif">
       <source type="image/webp" srcset="PaletteGradeStudios_Asset.webp">
-      <img class="hero-logo" width="80" height="80" decoding="async" src="PaletteGradeStudios_Asset.png" alt="PaletteGrade Studios"/>
+      <img class="hero-logo" width="80" height="80" decoding="async" loading="eager" fetchpriority="high" src="PaletteGradeStudios_Asset.png" alt="PaletteGrade Studios"/>
     </picture>
     <p class="hero-eyebrow">Pune • Color Grading • D.I. Studio</p>
     <h1 class="hero-title">Palette<span>Grade</span><br>Studios</h1>
@@ -693,14 +693,14 @@
           <picture>
             <source type="image/avif" srcset="slider/2.2.1_2.2_1.2.1.avif">
             <source type="image/webp" srcset="slider/2.2.1_2.2_1.2.1.webp">
-            <img src="slider/2.2.1_2.2_1.2.1.jpg" alt="Log image 1.2.1">
+            <img src="slider/2.2.1_2.2_1.2.1.jpg" loading="eager" fetchpriority="high" alt="Log image 1.2.1">
           </picture>
         </div>
         <div class="compare-layer compare-after">
           <picture>
             <source type="image/avif" srcset="slider/Still%202026-01-19%20193613_1.193.1.avif">
             <source type="image/webp" srcset="slider/Still%202026-01-19%20193613_1.193.1.webp">
-            <img src="slider/Still%202026-01-19%20193613_1.193.1.jpg" alt="Final image 1.193.1">
+            <img src="slider/Still%202026-01-19%20193613_1.193.1.jpg" loading="eager" fetchpriority="high" alt="Final image 1.193.1">
           </picture>
         </div>
         <div class="compare-label compare-label-before">Log</div>
@@ -1646,57 +1646,78 @@
       });
     }
 
-    function collectImageUrls() {
-      const urls = new Set();
+    function setImagePriority(images, eager = true) {
+      Array.from(images).forEach((img) => {
+        if (!img) return;
 
-      document.querySelectorAll('img, source').forEach((el) => {
-        const candidates = [];
-        const src = el.getAttribute('src');
-        const srcset = el.getAttribute('srcset');
-
-        if (src && !src.startsWith('data:') && !src.startsWith('blob:')) {
-          candidates.push(src);
-        }
-
-        if (srcset) {
-          srcset.split(',').forEach((entry) => {
-            const match = entry.trim().split(/\s+/)[0];
-            if (match && !match.startsWith('data:') && !match.startsWith('blob:')) {
-              candidates.push(match);
-            }
-          });
-        }
-
-        candidates.forEach((candidate) => urls.add(candidate));
-      });
-
-      return [...urls];
-    }
-
-    function preloadAllImages() {
-      collectImageUrls().forEach((src) => {
-        const img = new Image();
+        img.loading = eager ? 'eager' : 'lazy';
         img.decoding = 'async';
-        img.fetchPriority = 'high';
-        img.src = src;
+
+        if (eager) {
+          img.fetchPriority = 'high';
+        } else {
+          img.fetchPriority = 'auto';
+        }
+
+        img.dataset.priorityReady = 'true';
       });
     }
 
-    function setupLoaderAndImagePreload() {
-      document.querySelectorAll('img, source').forEach((el) => {
-        if (el.tagName.toLowerCase() === 'img') {
-          el.loading = 'eager';
-          el.decoding = 'async';
-          el.fetchPriority = 'high';
-        }
+    function setupCriticalImages() {
+      const heroPriority = document.querySelectorAll('.loader-logo, .nav-logo-img, .hero-logo, .hero-photo img');
+      const comparePriority = document.querySelectorAll('.compare-slider img');
+      const workflowPriority = document.querySelectorAll('.process-card img');
+      const partnerPriority = document.querySelectorAll('#partners img');
+      const beforeAfterSection = document.getElementById('grading-showcase');
+      const workflowSection = document.getElementById('workflow');
+      const partnersSection = document.getElementById('partners');
+
+      setImagePriority(heroPriority, true);
+      setImagePriority(comparePriority, true);
+
+      const releaseWorkflow = () => {
+        setImagePriority(workflowPriority, true);
+      };
+
+      const releasePartners = () => {
+        setImagePriority(partnerPriority, true);
+      };
+
+      if (beforeAfterSection) {
+        const beforeAfterObserver = new IntersectionObserver((entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            releaseWorkflow();
+            beforeAfterObserver.disconnect();
+          }
+        }, { rootMargin: '180px 0px', threshold: 0.15 });
+        beforeAfterObserver.observe(beforeAfterSection);
+      } else {
+        releaseWorkflow();
+      }
+
+      if (workflowSection) {
+        const workflowObserver = new IntersectionObserver((entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            releasePartners();
+            workflowObserver.disconnect();
+          }
+        }, { rootMargin: '200px 0px', threshold: 0.2 });
+        workflowObserver.observe(workflowSection);
+      } else {
+        releasePartners();
+      }
+
+      document.querySelectorAll('img').forEach((img) => {
+        if (img.dataset.priorityReady === 'true') return;
+        img.loading = 'lazy';
+        img.decoding = 'async';
       });
-      preloadAllImages();
     }
 
     function runStartupLoad() {
       showLoader();
       animateLoader();
-      setupLoaderAndImagePreload();
+      setupCriticalImages();
     }
 
     window.addEventListener('DOMContentLoaded', () => {
