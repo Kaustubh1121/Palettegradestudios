@@ -1646,15 +1646,35 @@
       });
     }
 
-    function preloadAllImages() {
-      const urls = [];
-      document.querySelectorAll('img').forEach((img) => {
-        const src = img.getAttribute('src');
-        if (!src || src.startsWith('data:')) return;
-        if (!urls.includes(src)) urls.push(src);
+    function collectImageUrls() {
+      const urls = new Set();
+
+      document.querySelectorAll('img, source').forEach((el) => {
+        const candidates = [];
+        const src = el.getAttribute('src');
+        const srcset = el.getAttribute('srcset');
+
+        if (src && !src.startsWith('data:') && !src.startsWith('blob:')) {
+          candidates.push(src);
+        }
+
+        if (srcset) {
+          srcset.split(',').forEach((entry) => {
+            const match = entry.trim().split(/\s+/)[0];
+            if (match && !match.startsWith('data:') && !match.startsWith('blob:')) {
+              candidates.push(match);
+            }
+          });
+        }
+
+        candidates.forEach((candidate) => urls.add(candidate));
       });
 
-      urls.forEach((src) => {
+      return [...urls];
+    }
+
+    function preloadAllImages() {
+      collectImageUrls().forEach((src) => {
         const img = new Image();
         img.decoding = 'async';
         img.fetchPriority = 'high';
@@ -1663,17 +1683,24 @@
     }
 
     function setupLoaderAndImagePreload() {
-      document.querySelectorAll('img').forEach((img) => {
-        img.loading = 'eager';
-        img.decoding = 'async';
-        img.fetchPriority = 'high';
+      document.querySelectorAll('img, source').forEach((el) => {
+        if (el.tagName.toLowerCase() === 'img') {
+          el.loading = 'eager';
+          el.decoding = 'async';
+          el.fetchPriority = 'high';
+        }
       });
       preloadAllImages();
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
+    function runStartupLoad() {
+      showLoader();
       animateLoader();
       setupLoaderAndImagePreload();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      runStartupLoad();
     });
 
     const navToggle = document.querySelector('.nav-toggle');
