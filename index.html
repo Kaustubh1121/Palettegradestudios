@@ -239,6 +239,9 @@
     .compare-thumb:nth-child(3) img,.compare-thumb:nth-child(5) img{width:100%;height:100%;margin:0;object-fit:contain;object-position:center;transform:none;transform-origin:center}
     .compare-thumb-label,.compare-thumb-tag{position:absolute;left:8px;z-index:2;padding:.24rem .48rem;border-radius:999px;background:rgba(10,10,10,.56);border:1px solid rgba(255,255,255,.08);font-size:.46rem;letter-spacing:.1em;text-transform:uppercase;color:#f7f1d8;line-height:1.2}
     .compare-thumb-label{top:8px;max-width:calc(100% - 16px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    img{content-visibility:auto;content-visibility: auto;}
+    .lazy-image{opacity:0;transition:opacity .2s ease, filter .2s ease;filter:saturate(.7) contrast(.96) brightness(.94);background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(255,255,255,.02));}
+    .lazy-image.is-loaded{opacity:1;filter:none}
 
     .compare-scene-grid{display:grid;gap:1rem;max-width:1200px;margin:0 auto}
     .compare-feature{display:grid;gap:.9rem}
@@ -1567,9 +1570,87 @@
       });
     }
 
+    function setupLazyImages() {
+      const eagerSectionSelectors = ['#hero', '#grading-showcase', '#workflow', '#work', '.compare-slider', '.process-card'];
+
+      const lazyImages = Array.from(document.querySelectorAll('img')).filter((img) => {
+        const critical = img.closest('.page-loader') || img.closest('nav') || img.classList.contains('loader-logo');
+        const eagerSection = eagerSectionSelectors.some((selector) => img.closest(selector));
+
+        if (critical) return false;
+
+        if (eagerSection) {
+          img.loading = 'eager';
+          img.decoding = 'async';
+          img.fetchPriority = 'high';
+          img.classList.remove('lazy-image');
+          return false;
+        }
+
+        return !!img.src && !img.dataset.lazyReady;
+      });
+
+      if (!lazyImages.length) return;
+
+      const placeholderSvg = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#1a1a1a"/>
+              <stop offset="50%" stop-color="#121212"/>
+              <stop offset="100%" stop-color="#191919"/>
+            </linearGradient>
+          </defs>
+          <rect width="1200" height="800" fill="url(#g)"/>
+          <circle cx="1040" cy="180" r="140" fill="rgba(201,168,76,0.14)"/>
+          <rect x="120" y="120" width="960" height="560" rx="22" fill="rgba(255,255,255,0.02)" stroke="rgba(201,168,76,0.1)"/>
+        </svg>
+      `);
+
+      lazyImages.forEach((img) => {
+        if (!img.dataset.src) {
+          img.dataset.src = img.getAttribute('src');
+        }
+        if (!img.dataset.src) return;
+
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.classList.add('lazy-image');
+        img.setAttribute('src', placeholderSvg);
+      });
+
+      const observer = new IntersectionObserver((entries, currentObserver) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const img = entry.target;
+          const realSrc = img.dataset.src;
+          if (!realSrc) return;
+
+          const temp = new Image();
+          temp.decoding = 'async';
+          temp.onload = () => {
+            img.src = realSrc;
+            img.classList.add('is-loaded');
+            img.dataset.lazyReady = 'true';
+            currentObserver.unobserve(img);
+          };
+          temp.onerror = () => {
+            img.src = realSrc;
+            img.classList.add('is-loaded');
+            img.dataset.lazyReady = 'true';
+            currentObserver.unobserve(img);
+          };
+          temp.src = realSrc;
+        });
+      }, { rootMargin: '120px 0px', threshold: 0.01 });
+
+      lazyImages.forEach((img) => observer.observe(img));
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       animateLoader();
       preloadCriticalAssets();
+      setupLazyImages();
     });
 
     const navToggle = document.querySelector('.nav-toggle');
